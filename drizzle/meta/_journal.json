@@ -29,6 +29,13 @@
       "when": 1792614569318,
       "tag": "0003_partners_and_notifications",
       "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "7",
+      "when": 1793138704368,
+      "tag": "0004_magenta_manta",
+      "breakpoints": true
     }
   ]
 }

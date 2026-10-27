@@ -16,6 +16,7 @@ type Action = {
 
 // Order of preference; the bar shows at most three channels that have data.
 const channels: { id: string; type: string; icon: LucideIcon }[] = [
+  { id: "haide_url", type: "url", icon: CalendarCheck },
   { id: "booking_url", type: "url", icon: CalendarCheck },
   { id: "phone", type: "phone", icon: Phone },
   { id: "whatsapp", type: "phone", icon: MessageCircle },
@@ -27,6 +28,7 @@ export function bookingActions(
   t: (text: string) => string,
 ): Action[] {
   const labels: Record<string, string> = {
+    haide_url: t("Vezi pe Haide"),
     booking_url: t("Rezervă online"),
     phone: t("Sună"),
     whatsapp: "WhatsApp",

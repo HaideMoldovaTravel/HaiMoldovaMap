@@ -1,6 +1,8 @@
 export type CategoryId = string;
 export interface Place {
   id: string;
+  source?: "haide";
+  sourceId?: string;
   name: string;
   category: Exclude<CategoryId, "all">;
   kind?: "location" | "experience";

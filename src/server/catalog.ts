@@ -32,6 +32,7 @@ import { initialFields } from "@/modules/catalog/templates";
 import { linkEmail, roleLabel } from "./mail";
 import { queueDecisionNotice, queueSubmissionNotice } from "./telegram";
 import type { Place } from "@/features/places/types";
+import { importedHaidePlaces } from "./haide/sync";
 
 export async function catalogConfig(includeInactive = false) {
   const cats = await db.select().from(categories).orderBy(categories.order);
@@ -311,7 +312,10 @@ export async function submitRevision(actor: Actor, revisionId: string) {
         `Mulțumim! Am primit propunerea ta${latest.values.name ? ` „${String(latest.values.name)}”` : ""} și echipa noastră o verifică. Îți scriem imediat ce o publicăm sau dacă e nevoie de corecturi.`,
         `${process.env.BETTER_AUTH_URL}/cont`,
         "Vezi propunerile mele",
-        { eyebrow: "Propunere trimisă", title: "Propunerea ta e în verificare" },
+        {
+          eyebrow: "Propunere trimisă",
+          title: "Propunerea ta e în verificare",
+        },
       ),
     });
     return { ok: true };
@@ -429,7 +433,10 @@ export async function moderate(actor: Actor, revisionId: string, raw: unknown) {
             `Vești bune! Propunerea ta${name} a fost aprobată și apare acum pe harta Hai Moldova. Mulțumim că ne ajuți să arătăm locurile frumoase ale țării.`,
             account,
             "Vezi propunerile mele",
-            { eyebrow: "Propunere aprobată", title: "Propunerea ta e publicată" },
+            {
+              eyebrow: "Propunere aprobată",
+              title: "Propunerea ta e publicată",
+            },
           );
         return linkEmail(
           `Echipa de moderare a verificat propunerea ta${name} și are un mesaj pentru tine:\n\n${input.feedback}`,
@@ -753,6 +760,7 @@ export async function revokeAdmin(actor: Actor, id: string) {
   return { ok: true };
 }
 export async function publicCatalog(): Promise<Place[]> {
+  const imported = await importedHaidePlaces();
   const rows = await db
     .select({
       listing: listings,
@@ -780,107 +788,111 @@ export async function publicCatalog(): Promise<Place[]> {
     .select({ id: assets.id, altText: assets.altText })
     .from(assets);
   const altById = new Map(assetNames.map((asset) => [asset.id, asset.altText]));
-  return rows.map(({ listing, revision, template, category }) => {
-    const hidden = new Set(
-      latestTemplates
-        .filter(
-          (t) => t.categoryId === category.id && t.version >= template.version,
-        )
-        .flatMap((t) => t.fields.filter((f) => !f.public).map((f) => f.id)),
-    );
-    const visibleFields = template.fields.filter((f) => !hidden.has(f.id));
-    const v = publicValues(visibleFields, revision.values);
-    const gallery = Array.isArray(v.gallery)
-      ? v.gallery.map((id) =>
-          listing.demo && id.startsWith("https://images.unsplash.com/")
-            ? id
-            : `/api/media/${id}`,
-        )
-      : [];
-    const contacts = Object.fromEntries(
-      visibleFields
-        .filter((f) => f.group === "contacts" && f.public && v[f.id])
-        .map((f) => [f.id, String(v[f.id])]),
-    );
-    return {
-      id: listing.id,
-      name: String(v.name ?? ""),
-      category: category.id,
-      kind: listing.kind === "experience" ? "experience" : "location",
-      categoryLabel: category.name,
-      categoryLabelEn: category.nameEn,
-      categoryColor: category.color,
-      categoryIcon: category.iconAssetId
-        ? `/api/media/${category.iconAssetId}`
-        : undefined,
-      region: String(v.region ?? ""),
-      village: String(v.village ?? ""),
-      coordinates: [Number(v.latitude), Number(v.longitude)],
-      rating: listing.demo ? Number(revision.values.demo_rating ?? 0) : 0,
-      reviews: listing.demo ? Number(revision.values.demo_reviews ?? 0) : 0,
-      image: gallery[0] ?? "/placeholder.svg",
-      imageAlts: Array.isArray(v.gallery)
-        ? v.gallery.map((id) => altById.get(id) || String(v.name ?? ""))
-        : [],
-      images: gallery.length ? gallery : ["/placeholder.svg"],
-      description: String(v.description ?? ""),
-      tags: Array.isArray(v.tags) ? v.tags : [],
-      price: Number(v.price ?? 0),
-      priceLabel: String(v.price_unit ?? ""),
-      priceMode: String(v.price_mode ?? "La cerere"),
-      currency: String(v.currency ?? "MDL"),
-      hours: String(v.hours ?? ""),
-      featured: listing.demo && !!revision.values.demo_featured,
-      demo: listing.demo,
-      contacts,
-      contactFields: visibleFields
-        .filter((f) => f.group === "contacts" && f.public && v[f.id])
-        .map((f) => ({
-          id: f.id,
-          label: f.label,
-          labelEn: f.labelEn,
-          type: f.type,
-          value: String(v[f.id]),
-        })),
-      translatedName: String(v.name_en ?? ""),
-      translatedDescription: String(v.description_en ?? ""),
-      details: visibleFields
-        .filter(
-          (f) =>
-            f.public &&
-            f.group !== "contacts" &&
-            ![
-              "name",
-              "name_en",
-              "description",
-              "description_en",
-              "latitude",
-              "longitude",
-              "village",
-              "region",
-              "gallery",
-              "hours",
-              "price",
-              "currency",
-              "price_mode",
-              "price_unit",
-              "tags",
-              "internal_notes",
-            ].includes(f.id) &&
-            v[f.id] !== undefined,
-        )
-        .map((f) => ({
-          id: f.id,
-          label: f.label,
-          labelEn: f.labelEn,
-          type: f.type,
-          value:
-            f.type === "gallery" && Array.isArray(v[f.id])
-              ? (v[f.id] as string[]).map((id) => `/api/media/${id}`)
-              : v[f.id],
-        })),
-    };
-  });
+  const local: Place[] = rows.map(
+    ({ listing, revision, template, category }) => {
+      const hidden = new Set(
+        latestTemplates
+          .filter(
+            (t) =>
+              t.categoryId === category.id && t.version >= template.version,
+          )
+          .flatMap((t) => t.fields.filter((f) => !f.public).map((f) => f.id)),
+      );
+      const visibleFields = template.fields.filter((f) => !hidden.has(f.id));
+      const v = publicValues(visibleFields, revision.values);
+      const gallery = Array.isArray(v.gallery)
+        ? v.gallery.map((id) =>
+            listing.demo && id.startsWith("https://images.unsplash.com/")
+              ? id
+              : `/api/media/${id}`,
+          )
+        : [];
+      const contacts = Object.fromEntries(
+        visibleFields
+          .filter((f) => f.group === "contacts" && f.public && v[f.id])
+          .map((f) => [f.id, String(v[f.id])]),
+      );
+      return {
+        id: listing.id,
+        name: String(v.name ?? ""),
+        category: category.id,
+        kind: listing.kind === "experience" ? "experience" : "location",
+        categoryLabel: category.name,
+        categoryLabelEn: category.nameEn,
+        categoryColor: category.color,
+        categoryIcon: category.iconAssetId
+          ? `/api/media/${category.iconAssetId}`
+          : undefined,
+        region: String(v.region ?? ""),
+        village: String(v.village ?? ""),
+        coordinates: [Number(v.latitude), Number(v.longitude)],
+        rating: listing.demo ? Number(revision.values.demo_rating ?? 0) : 0,
+        reviews: listing.demo ? Number(revision.values.demo_reviews ?? 0) : 0,
+        image: gallery[0] ?? "/placeholder.svg",
+        imageAlts: Array.isArray(v.gallery)
+          ? v.gallery.map((id) => altById.get(id) || String(v.name ?? ""))
+          : [],
+        images: gallery.length ? gallery : ["/placeholder.svg"],
+        description: String(v.description ?? ""),
+        tags: Array.isArray(v.tags) ? v.tags : [],
+        price: Number(v.price ?? 0),
+        priceLabel: String(v.price_unit ?? ""),
+        priceMode: String(v.price_mode ?? "La cerere"),
+        currency: String(v.currency ?? "MDL"),
+        hours: String(v.hours ?? ""),
+        featured: listing.demo && !!revision.values.demo_featured,
+        demo: listing.demo,
+        contacts,
+        contactFields: visibleFields
+          .filter((f) => f.group === "contacts" && f.public && v[f.id])
+          .map((f) => ({
+            id: f.id,
+            label: f.label,
+            labelEn: f.labelEn,
+            type: f.type,
+            value: String(v[f.id]),
+          })),
+        translatedName: String(v.name_en ?? ""),
+        translatedDescription: String(v.description_en ?? ""),
+        details: visibleFields
+          .filter(
+            (f) =>
+              f.public &&
+              f.group !== "contacts" &&
+              ![
+                "name",
+                "name_en",
+                "description",
+                "description_en",
+                "latitude",
+                "longitude",
+                "village",
+                "region",
+                "gallery",
+                "hours",
+                "price",
+                "currency",
+                "price_mode",
+                "price_unit",
+                "tags",
+                "internal_notes",
+              ].includes(f.id) &&
+              v[f.id] !== undefined,
+          )
+          .map((f) => ({
+            id: f.id,
+            label: f.label,
+            labelEn: f.labelEn,
+            type: f.type,
+            value:
+              f.type === "gallery" && Array.isArray(v[f.id])
+                ? (v[f.id] as string[]).map((id) => `/api/media/${id}`)
+                : v[f.id],
+          })),
+      };
+    },
+  );
+  return [...local, ...imported];
 }
 export async function assetAllowed(id: string, actor: Actor | null) {
   const [asset] = await db.select().from(assets).where(eq(assets.id, id));

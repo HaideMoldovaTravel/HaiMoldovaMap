@@ -268,3 +268,33 @@ export const notificationOutbox = pgTable(
     index("notification_ref_idx").on(t.refId),
   ],
 );
+
+// Read-only mirrors; no account credentials or reservation data are imported.
+export const haideCatalog = pgTable("haide_catalog", {
+  id: text("id").primaryKey(),
+  payload: jsonb("payload")
+    .$type<import("@/modules/haide/catalog").HaideItem>()
+    .notNull(),
+  contentHash: text("content_hash").notNull(),
+  categoryId: text("category_id")
+    .notNull()
+    .references(() => categories.id),
+  visible: boolean("visible").notNull().default(false),
+  suppressed: boolean("suppressed").notNull().default(false),
+  issue: text("issue"),
+  lastSeenRunId: text("last_seen_run_id").notNull(),
+  updatedAt: time("updated_at").notNull().defaultNow(),
+});
+export const haideSyncRuns = pgTable("haide_sync_runs", {
+  id: text("id").primaryKey(),
+  source: text("source").notNull(),
+  status: text("status").notNull(),
+  trigger: text("trigger").notNull(),
+  actorId: text("actor_id").references(() => user.id),
+  imported: integer("imported").notNull().default(0),
+  hidden: integer("hidden").notNull().default(0),
+  issues: integer("issues").notNull().default(0),
+  error: text("error"),
+  startedAt: time("started_at").notNull().defaultNow(),
+  finishedAt: time("finished_at"),
+});

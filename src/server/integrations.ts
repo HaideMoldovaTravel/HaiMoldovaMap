@@ -5,6 +5,7 @@ import { z } from "zod";
 import { db } from "./db";
 import {
   audit,
+  haideCatalog,
   integrationStats,
   listings,
   partnerIntegrations,
@@ -214,7 +215,13 @@ export async function embedVersion(integration: Integration) {
     })
     .from(listings)
     .where(eq(listings.status, "published"));
-  return `${integration.version}.${integration.status}.${latest.count}.${latest.updated}`;
+  const [haide] = await db
+    .select({
+      updated: sql<string>`coalesce(max(${haideCatalog.updatedAt})::text, '')`,
+      count: sql<number>`count(*)::int`,
+    })
+    .from(haideCatalog);
+  return `${integration.version}.${integration.status}.${latest.count}.${latest.updated}.${haide.count}.${haide.updated}`;
 }
 
 const messengerFields = ["whatsapp", "viber"];
@@ -249,7 +256,7 @@ export async function embedCatalog(settings: IntegrationSettings) {
       const contactsOn =
         p.kind === "experience" ? contacts.experiences : contacts.locations;
       const keep = (id: string) => {
-        if (id === "booking_url") return contacts.booking;
+        if (id === "booking_url" || id === "haide_url") return contacts.booking;
         if (!contactsOn) return false;
         if (messengerFields.includes(id)) return contacts.messengers;
         if (socialFields.includes(id)) return contacts.social;

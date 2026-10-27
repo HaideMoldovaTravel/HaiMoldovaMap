@@ -3466,3 +3466,7 @@
     font-size: 13px;
   }
 }
+
+.ad-card .ad-table { width: 100%; border-collapse: collapse; }
+.ad-card .ad-table th, .ad-card .ad-table td { text-align: left; padding: 12px; border-bottom: 1px solid var(--ad-line); vertical-align: top; }
+.ad-card .ad-table th { color: var(--ad-muted); font-size: 12px; }

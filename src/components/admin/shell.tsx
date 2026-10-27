@@ -74,6 +74,12 @@ const navigation = [
         owner: true,
       },
       {
+        href: "/admin/haide-sync",
+        label: "Sincronizare Haide",
+        icon: Code2,
+        configure: true,
+      },
+      {
         href: "/admin/integrations",
         label: "Integrări parteneri",
         icon: Code2,
@@ -103,6 +109,7 @@ const titles: Record<string, string> = {
   activity: "Jurnal de activitate",
   settings: "Setări",
   integrations: "Integrări parteneri",
+  "haide-sync": "Sincronizare Haide",
   notifications: "Notificări Telegram",
   add: "Adaugă",
   edit: "Editează",

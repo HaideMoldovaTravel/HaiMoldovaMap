@@ -1,5 +1,6 @@
 export type Locale = "ro" | "en" | "ru";
 export const messages: Record<string, { en: string; ru: string }> = {
+  "Vezi pe Haide": { en: "View on Haide", ru: "Посмотреть на Haide" },
   "Hai Moldova — Descoperă locuri, trăiește povești": {
     en: "Hai Moldova — Discover places, live stories",
     ru: "Hai Moldova — Открывайте места, проживайте истории",

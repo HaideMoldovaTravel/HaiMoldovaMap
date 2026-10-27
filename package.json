@@ -19,7 +19,9 @@
     "setup": "node scripts/setup.mjs",
     "docker:up": "docker compose up -d --build",
     "docker:down": "docker compose down",
-    "test:integration": "tsx --env-file=.env scripts/integration-test.ts"
+    "test:integration": "tsx --env-file=.env scripts/integration-test.ts",
+    "sync:haide": "tsx --env-file-if-exists=.env scripts/haide-sync.ts",
+    "sync:haide:watch": "tsx --env-file-if-exists=.env scripts/haide-sync.ts --watch"
   },
   "dependencies": {
     "@aws-sdk/client-s3": "^3.1152.0",
