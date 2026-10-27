@@ -17,15 +17,26 @@ const I18nContext = createContext<{
     params?: Record<string, string | number>,
   ) => string;
 } | null>(null);
-export function I18nProvider({ children }: { children: React.ReactNode }) {
-  const [locale, setLanguage] = useState<Locale>("ro");
+export function I18nProvider({
+  children,
+  initialLocale = "ro",
+  persist = true,
+}: {
+  children: React.ReactNode;
+  initialLocale?: Locale;
+  // Embeds with a fixed language must ignore the visitor's saved choice.
+  persist?: boolean;
+}) {
+  const [locale, setLanguage] = useState<Locale>(initialLocale);
   useEffect(() => {
+    if (!persist) return;
     try {
       const saved = localStorage.getItem("hai-moldova-language");
-      if (saved === "ro" || saved === "en" || saved === "ru")
+      // Russian is no longer offered; a saved "ru" falls back to Romanian.
+      if (saved === "ro" || saved === "en")
         queueMicrotask(() => setLanguage(saved));
     } catch {}
-  }, []);
+  }, [persist]);
   useEffect(() => {
     document.documentElement.lang = locale;
     document.title = translate(
@@ -33,12 +44,16 @@ export function I18nProvider({ children }: { children: React.ReactNode }) {
       locale,
     );
   }, [locale]);
-  const setLocale = useCallback((value: Locale) => {
-    setLanguage(value);
-    try {
-      localStorage.setItem("hai-moldova-language", value);
-    } catch {}
-  }, []);
+  const setLocale = useCallback(
+    (value: Locale) => {
+      setLanguage(value);
+      if (!persist) return;
+      try {
+        localStorage.setItem("hai-moldova-language", value);
+      } catch {}
+    },
+    [persist],
+  );
   const t = useCallback(
     (text: string | undefined, params?: Record<string, string | number>) =>
       translate(text, locale, params),

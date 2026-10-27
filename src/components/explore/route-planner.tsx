@@ -198,6 +198,17 @@ export function RoutePlanner({
           {t(error)}
         </p>
       )}
+      {to && (
+        <a
+          className="external-navigation primary-button"
+          href={`https://www.google.com/maps/dir/?api=1&destination=${to.coordinates.join(",")}${from ? `&origin=${from.coordinates.join(",")}` : ""}&travelmode=driving`}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <ArrowRight size={17} />{" "}
+          {locale === "en" ? "Open in Google Maps" : "Deschide în Google Maps"}
+        </a>
+      )}
       {routes.length > 0 && (
         <div className="route-results">
           {routes.map((r, i) => (

@@ -6,9 +6,23 @@ import {
   Trees,
   Landmark,
   Utensils,
+  Church,
+  Castle,
+  University,
+  Drama,
+  Palette,
+  TreeDeciduous,
+  Store,
+  Hotel,
+  TentTree,
+  Coffee,
+  Beer,
+  Grape,
+  Map,
+  ShoppingBag,
 } from "lucide-react";
 import type { CategoryId } from "@/features/places/types";
-export const categoryIcons = {
+export const categoryIcons: Record<CategoryId, typeof Compass> = {
   all: Compass,
   winery: Wine,
   stay: BedDouble,
@@ -16,7 +30,22 @@ export const categoryIcons = {
   nature: Trees,
   culture: Landmark,
   food: Utensils,
-} satisfies Record<CategoryId, typeof Compass>;
+  // Categories created by scripts/import-places.ts
+  worship: Church,
+  monuments: Castle,
+  museums: University,
+  theatres: Drama,
+  galleries: Palette,
+  parks: TreeDeciduous,
+  markets: Store,
+  hotels: Hotel,
+  resorts: TentTree,
+  cafes: Coffee,
+  bars: Beer,
+  "wine-bars": Grape,
+  "tour-operators": Map,
+  shopping: ShoppingBag,
+};
 export const categoryColors: Record<CategoryId, string> = {
   all: "#002626",
   winery: "#944236",

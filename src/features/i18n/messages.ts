@@ -20,6 +20,22 @@ export const messages: Record<string, { en: string; ru: string }> = {
     en: "Saved",
     ru: "Избранное",
   },
+  Listă: {
+    en: "List",
+    ru: "Список",
+  },
+  Adaugă: {
+    en: "Add",
+    ru: "Добавить",
+  },
+  Cont: {
+    en: "Account",
+    ru: "Профиль",
+  },
+  Despre: {
+    en: "About",
+    ru: "О проекте",
+  },
   "Despre noi": {
     en: "About us",
     ru: "О нас",
@@ -843,5 +859,29 @@ export const messages: Record<string, { en: string; ru: string }> = {
   înapoi: {
     en: "back",
     ru: "назад",
+  },
+  "Rezervă online": {
+    en: "Book online",
+    ru: "Забронировать",
+  },
+  Sună: {
+    en: "Call",
+    ru: "Позвонить",
+  },
+  "Rezervări și contact": {
+    en: "Booking and contact",
+    ru: "Бронирование и контакты",
+  },
+  "Vezi detalii": {
+    en: "See details",
+    ru: "Подробнее",
+  },
+  "Hartă oferită de": {
+    en: "Map by",
+    ru: "Карта от",
+  },
+  "{{count}} locuri": {
+    en: "{{count}} places",
+    ru: "Мест: {{count}}",
   },
 };

@@ -5,21 +5,26 @@ import { useI18n } from "@/features/i18n/provider";
 import { ArrowRight, Heart, MapPin, Sparkles, Star } from "lucide-react";
 import { categories } from "@/features/places/data";
 import type { Place } from "@/features/places/types";
+import { formatPlacePrice } from "@/features/places/presentation";
 import { categoryIcons } from "./icons";
 export function PlaceCard({
   place: p,
   saved,
   onSave,
   onSelect,
+  showSave = true,
+  showPrice = true,
 }: {
   place: Place;
   saved: boolean;
   onSave: () => void;
   onSelect: () => void;
+  showSave?: boolean;
+  showPrice?: boolean;
 }) {
-  const { t } = useI18n();
+  const { t, locale } = useI18n();
 
-  const Icon = categoryIcons[p.category];
+  const Icon = categoryIcons[p.category] ?? categoryIcons.all;
   return (
     <article className="place-card">
       <div className="card-image">
@@ -30,7 +35,12 @@ export function PlaceCard({
         >
           <img
             src={p.image}
-            alt={t("Fotografie ilustrativă pentru {{name}}", { name: p.name })}
+            alt={
+              p.imageAlts?.[0] ||
+              (p.demo === false
+                ? p.name
+                : t("Fotografie ilustrativă pentru {{name}}", { name: p.name }))
+            }
             loading="lazy"
           />
         </button>
@@ -40,29 +50,44 @@ export function PlaceCard({
             {t("De neratat")}
           </span>
         )}
-        <button
-          className={`save-button ${saved ? "saved" : ""}`}
-          aria-label={
-            saved
-              ? t("Elimină {{name}} din salvate", { name: p.name })
-              : t("Salvează {{name}}", { name: p.name })
-          }
-          onClick={onSave}
-        >
-          <Heart size={17} fill={saved ? "currentColor" : "none"} />
-        </button>
+        {showSave && (
+          <button
+            className={`save-button ${saved ? "saved" : ""}`}
+            aria-label={
+              saved
+                ? t("Elimină {{name}} din salvate", { name: p.name })
+                : t("Salvează {{name}}", { name: p.name })
+            }
+            onClick={onSave}
+          >
+            <Heart size={17} fill={saved ? "currentColor" : "none"} />
+          </button>
+        )}
         <span className="image-category">
-          <Icon size={12} />
-          {t(categories.find((c) => c.id === p.category)?.label)}
+          {p.categoryIcon ? (
+            <img
+              src={p.categoryIcon}
+              alt=""
+              width={12}
+              height={12}
+              style={{ objectFit: "contain" }}
+            />
+          ) : (
+            <Icon size={12} />
+          )}
+          {(locale === "en" ? p.categoryLabelEn : p.categoryLabel) ??
+            t(categories.find((c) => c.id === p.category)?.label)}
         </span>
       </div>
       <button className="card-body" onClick={onSelect}>
         <div className="card-title">
           <h2>{p.name}</h2>
-          <span>
-            <Star size={13} fill="currentColor" />
-            {p.rating.toFixed(1)} <small>({p.reviews})</small>
-          </span>
+          {p.reviews > 0 && (
+            <span>
+              <Star size={13} fill="currentColor" />
+              {p.rating.toFixed(1)} <small>({p.reviews})</small>
+            </span>
+          )}
         </div>
         <div className="card-location">
           <MapPin size={12} />
@@ -74,13 +99,13 @@ export function PlaceCard({
           ))}
         </div>
         <div className="card-price">
-          {p.price > 0 ? (
+          {showPrice ? (
             <>
-              <strong>{t("De la {{price}} MDL", { price: p.price })}</strong>
-              <span>/ {p.priceLabel}</span>
+              <strong>{formatPlacePrice(p, t)}</strong>
+              {p.price > 0 && <span>/ {p.priceLabel}</span>}
             </>
           ) : (
-            <strong>{t("Acces liber")}</strong>
+            <strong>{t("Vezi detalii")}</strong>
           )}
           <ArrowRight size={15} />
         </div>

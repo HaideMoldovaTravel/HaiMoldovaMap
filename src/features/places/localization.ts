@@ -125,6 +125,18 @@ const content: Record<string, { en: [string, string]; ru: [string, string] }> =
     },
   };
 export function localizePlace(place: Place, locale: Locale): Place {
+  if (place.demo === false)
+    return {
+      ...place,
+      name:
+        locale === "en" && place.translatedName
+          ? place.translatedName
+          : place.name,
+      description:
+        locale === "en" && place.translatedDescription
+          ? place.translatedDescription
+          : place.description,
+    };
   const copy = locale === "ro" ? null : content[place.id]?.[locale];
   return {
     ...place,

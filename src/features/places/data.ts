@@ -271,6 +271,12 @@ export function filterPlaces(
       (filters.region === "all" || p.region === filters.region) &&
       p.rating >= filters.minRating &&
       p.price <= filters.maxPrice &&
+      (filters.maxPrice >= 2000 ||
+        p.demo !== false ||
+        ((p.priceMode === "Gratuit" ||
+          p.priceMode === "Fix" ||
+          p.priceMode === "De la") &&
+          (!p.currency || p.currency === "MDL"))) &&
       (!filters.savedOnly || saved.includes(p.id)),
   );
 }
