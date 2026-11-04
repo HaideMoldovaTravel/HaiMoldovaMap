@@ -1,6 +1,7 @@
 "use client";
 import { useState, type ReactNode } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
 import { createAuthClient } from "better-auth/react";
 import {
@@ -22,7 +23,6 @@ import {
   X,
   ChevronRight,
   LogOut,
-  Leaf,
   HelpCircle,
   Code2,
   BellRing,
@@ -134,13 +134,8 @@ export function AdminShell({
     <div className="platform-shell admin-workspace">
       <aside className={`ad-sidebar ${open ? "is-open" : ""}`}>
         <Link href="/admin" className="ad-brand" onClick={() => setOpen(false)}>
-          <span className="ad-brand-icon">
-            <Leaf size={22} />
-          </span>
-          <span>
-            hai<span>moldova</span>
-            <small>ADMINISTRARE</small>
-          </span>
+          <Image src="/haide-logo.svg" alt="Haide" width={150} height={47} />
+          <small>ADMINISTRARE</small>
         </Link>
         <button
           className="ad-mobile-close"
@@ -150,9 +145,11 @@ export function AdminShell({
           <X size={20} />
         </button>
         <div className="ad-workspace-label">
-          <span>HM</span>
+          <span>
+            <Image src="/haide-symbol.svg" alt="" width={26} height={24} />
+          </span>
           <div>
-            Hai Moldova<small>Platforma de turism</small>
+            Haide<small>Platforma de turism</small>
           </div>
           <span className="ad-live-dot" />
         </div>
@@ -291,7 +288,7 @@ export function AdminShell({
         </header>
         <div className="ad-content">{children}</div>
         <footer className="ad-footer">
-          <span>© {new Date().getFullYear()} Hai Moldova</span>
+          <span>© {new Date().getFullYear()} Haide</span>
           <Link href="/admin/settings">
             <HelpCircle size={13} />
             Configurare și stare platformă

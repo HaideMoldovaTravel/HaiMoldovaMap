@@ -11,7 +11,9 @@ import {
   geometry,
   date,
   primaryKey,
+  doublePrecision,
 } from "drizzle-orm/pg-core";
+import type { ListingFormMode } from "@/modules/catalog/simple-experience";
 import type { ContentField, ContentValues } from "@/modules/catalog/schema";
 import type { IntegrationSettings } from "@/modules/integrations/settings";
 const time = (name: string) => timestamp(name, { withTimezone: true });
@@ -136,6 +138,10 @@ export const revisions = pgTable(
     templateId: text("template_id")
       .notNull()
       .references(() => templates.id),
+    formMode: text("form_mode")
+      .$type<ListingFormMode>()
+      .notNull()
+      .default("full"),
     values: jsonb("values").$type<ContentValues>().notNull(),
     point: geometry("point", { type: "point", mode: "xy", srid: 4326 }),
     parentLocationId: text("parent_location_id").references(() => listings.id),
@@ -271,6 +277,7 @@ export const notificationOutbox = pgTable(
 
 // Read-only mirrors; no account credentials or reservation data are imported.
 export const haideCatalog = pgTable("haide_catalog", {
+  locationCheckedAt: time("location_checked_at"),
   id: text("id").primaryKey(),
   payload: jsonb("payload")
     .$type<import("@/modules/haide/catalog").HaideItem>()
@@ -297,4 +304,22 @@ export const haideSyncRuns = pgTable("haide_sync_runs", {
   error: text("error"),
   startedAt: time("started_at").notNull().defaultNow(),
   finishedAt: time("finished_at"),
+});
+
+export const haideLocations = pgTable("haide_locations", {
+  id: text("id")
+    .primaryKey()
+    .references(() => haideCatalog.id),
+  queryKey: text("query_key").notNull(),
+  latitude: doublePrecision("latitude").notNull(),
+  longitude: doublePrecision("longitude").notNull(),
+  precision: text("precision").notNull(),
+  updatedAt: time("updated_at").notNull().defaultNow(),
+});
+export const haideGeocodeCache = pgTable("haide_geocode_cache", {
+  key: text("key").primaryKey(),
+  latitude: doublePrecision("latitude"),
+  longitude: doublePrecision("longitude"),
+  precision: text("precision").notNull(),
+  retryAt: time("retry_at").notNull(),
 });

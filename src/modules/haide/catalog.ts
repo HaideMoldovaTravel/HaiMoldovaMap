@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { experienceSubcategories } from "@/features/places/exploration";
 import type { Place } from "@/features/places/types";
 
 const webUrl = z
@@ -15,6 +16,10 @@ export const haideItemSchema = z
     description: z.string().max(100000),
     description_en: z.string().max(100000),
     city: z.string().max(255),
+    address: z.string().max(500).optional(),
+    phone: z.string().max(50).nullable().optional(),
+    whatsapp: z.string().max(50).nullable().optional(),
+    subcategories: z.array(z.string().max(100)).max(30).optional(),
     latitude: z.number().finite().min(-90).max(90).nullable(),
     longitude: z.number().finite().min(-180).max(180).nullable(),
     images: z.array(webUrl).max(30),
@@ -72,6 +77,9 @@ export function haidePlace(item: HaideItem, category: string): Place | null {
     description: item.description,
     translatedDescription: item.description_en,
     category,
+    subcategories: item.subcategories?.filter((id) =>
+      experienceSubcategories.some((c) => c.id === id),
+    ),
     kind: item.type === "experience" ? "experience" : "location",
     region: "",
     village: item.city,
@@ -81,7 +89,7 @@ export function haidePlace(item: HaideItem, category: string): Place | null {
     demo: false,
     image: item.images[0] ?? "/placeholder.svg",
     images: item.images.length ? item.images : ["/placeholder.svg"],
-    tags: [],
+    tags: item.subcategories ?? [],
     hours: "",
     price: item.price ?? 0,
     currency: item.currency,
@@ -92,7 +100,12 @@ export function haidePlace(item: HaideItem, category: string): Place | null {
           ? "Gratuit"
           : "De la",
     priceLabel: item.type === "accommodation" ? "noapte" : "persoană",
-    contacts: { [linkId]: item.url },
+    // Only public organization contacts are exported by Haide.
+    contacts: {
+      [linkId]: item.url,
+      ...(item.phone ? { phone: item.phone } : {}),
+      ...(item.whatsapp ? { whatsapp: item.whatsapp } : {}),
+    },
     contactFields: [
       {
         id: linkId,
@@ -101,6 +114,28 @@ export function haidePlace(item: HaideItem, category: string): Place | null {
         type: "url",
         value: item.url,
       },
+      ...(item.phone
+        ? [
+            {
+              id: "phone",
+              label: "Telefon",
+              labelEn: "Phone",
+              type: "phone",
+              value: item.phone,
+            },
+          ]
+        : []),
+      ...(item.whatsapp
+        ? [
+            {
+              id: "whatsapp",
+              label: "WhatsApp",
+              labelEn: "WhatsApp",
+              type: "phone",
+              value: item.whatsapp,
+            },
+          ]
+        : []),
     ],
   };
 }

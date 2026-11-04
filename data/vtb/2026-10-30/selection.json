@@ -1,0 +1,1343 @@
+{
+  "schema_version": 1,
+  "snapshot_sha256": "327ce7b9a2c02cf14126e7d00a97eaedf18085aed38a46df6ae150357a73d0bc",
+  "source": "https://www.implicareplus.org/vtb/",
+  "publication_scope": "map_only",
+  "sync_to_haide": false,
+  "reviewer": "assistant",
+  "authorization": "Utilizatorul a delegat selecția și importul numai pe hartă, cu rezervare prin contact direct.",
+  "decisions": [
+    {
+      "id": "vtb-223",
+      "name": "🏠 Casa rurală <Деревенская Благодать>",
+      "decision": "approve_location",
+      "notes": "Unitate de cazare, gastronomie sau vinărie identificată în denumire; propusă ca locație pe hartă."
+    },
+    {
+      "id": "vtb-250",
+      "name": "Centrul Sportiv din satul Șerpeni",
+      "decision": "reject",
+      "notes": "Centru sportiv comunitar cu terenuri cu acces liber; fără ofertă turistică rezervabilă."
+    },
+    {
+      "id": "vtb-25",
+      "name": "Gura rîului 🌊<Bîc>",
+      "decision": "reject",
+      "notes": "Obiectiv natural de vizitare, fără serviciu organizat demonstrat în fișă."
+    },
+    {
+      "id": "vtb-239",
+      "name": "Pensiunea Ancuței",
+      "decision": "approve_location",
+      "notes": "Unitate de cazare, gastronomie sau vinărie identificată în denumire; propusă ca locație pe hartă."
+    },
+    {
+      "id": "vtb-243",
+      "name": "Prisaca lui <Moș Boris>",
+      "decision": "approve_experience",
+      "notes": "Furnizor de activitate identificabil și contact public; rezervarea efectivă trebuie confirmată."
+    },
+    {
+      "id": "vtb-242",
+      "name": "Terasa Cozonac",
+      "decision": "approve_location",
+      "notes": "Unitate de cazare, gastronomie sau vinărie identificată în denumire; propusă ca locație pe hartă."
+    },
+    {
+      "id": "vtb-21",
+      "name": "⛪ Biserica <\"Sfântul Ierarh Nicolae\"> din <Gura Bâcului>",
+      "decision": "reject",
+      "notes": "Muzeu, monument, lăcaș de cult sau patrimoniu de vizitare; în afara selecției cerute."
+    },
+    {
+      "id": "vtb-9",
+      "name": "⛪ Biserica Nouă din Puhăceni",
+      "decision": "reject",
+      "notes": "Muzeu, monument, lăcaș de cult sau patrimoniu de vizitare; în afara selecției cerute."
+    },
+    {
+      "id": "vtb-163",
+      "name": "⛪ Biserica Sfântul 🕊️ Ierarh Nicolae din Hîrbovăț",
+      "decision": "reject",
+      "notes": "Muzeu, monument, lăcaș de cult sau patrimoniu de vizitare; în afara selecției cerute."
+    },
+    {
+      "id": "vtb-135",
+      "name": "✨ Stația cu mozaic Hîrbovăț",
+      "decision": "reject",
+      "notes": "Muzeu, monument, lăcaș de cult sau patrimoniu de vizitare; în afara selecției cerute."
+    },
+    {
+      "id": "vtb-23",
+      "name": "🌉 Podul Gura Bîcului - Bîcioc",
+      "decision": "reject",
+      "notes": "Muzeu, monument, lăcaș de cult sau patrimoniu de vizitare; în afara selecției cerute."
+    },
+    {
+      "id": "vtb-1",
+      "name": "🌲⛺️ Camping <\"La Barjă\">",
+      "decision": "approve_location",
+      "notes": "Unitate de cazare, gastronomie sau vinărie identificată în denumire; propusă ca locație pe hartă."
+    },
+    {
+      "id": "vtb-7",
+      "name": "🍲UAU Catering",
+      "decision": "approve_location",
+      "notes": "Unitate de cazare, gastronomie sau vinărie identificată în denumire; propusă ca locație pe hartă."
+    },
+    {
+      "id": "vtb-210",
+      "name": "🏛️ Complex Memorial <Cap de Pod Șerpeni>",
+      "decision": "reject",
+      "notes": "Muzeu, monument, lăcaș de cult sau patrimoniu de vizitare; în afara selecției cerute."
+    },
+    {
+      "id": "vtb-8",
+      "name": "🏛️ Casa de Cultură Puhăceni",
+      "decision": "reject",
+      "notes": "Muzeu, monument, lăcaș de cult sau patrimoniu de vizitare; în afara selecției cerute."
+    },
+    {
+      "id": "vtb-40",
+      "name": "🏛️ Muzeul de Istorie și Etnografie Gura Bâcului",
+      "decision": "reject",
+      "notes": "Muzeu, monument, lăcaș de cult sau patrimoniu de vizitare; în afara selecției cerute."
+    },
+    {
+      "id": "vtb-6",
+      "name": "🏞️ Belvedere Puhăceni în Sus",
+      "decision": "reject",
+      "notes": "Obiectiv natural de vizitare, fără serviciu organizat demonstrat în fișă."
+    },
+    {
+      "id": "vtb-22",
+      "name": "🏡 Casa Pădurarului 🌳",
+      "decision": "reject",
+      "notes": "Obiectiv natural de vizitare, fără serviciu organizat demonstrat în fișă."
+    },
+    {
+      "id": "vtb-10",
+      "name": "🏡 Casa rurală MillaVera",
+      "decision": "approve_location",
+      "notes": "Unitate de cazare, gastronomie sau vinărie identificată în denumire; propusă ca locație pe hartă."
+    },
+    {
+      "id": "vtb-4",
+      "name": "🏫 Școala de Zemstvo din Puhăceni",
+      "decision": "reject",
+      "notes": "Muzeu, monument, lăcaș de cult sau patrimoniu de vizitare; în afara selecției cerute."
+    },
+    {
+      "id": "vtb-83",
+      "name": "🏰 Castel Mimi Wine Resort 🍇🍷",
+      "decision": "approve_location",
+      "notes": "Unitate de cazare, gastronomie sau vinărie identificată în denumire; propusă ca locație pe hartă."
+    },
+    {
+      "id": "vtb-80",
+      "name": "🏰 Conacul Drăgălina",
+      "decision": "approve_location",
+      "notes": "Conacul Drăgălina funcționează ca restaurant din 2018, conform Curiozitate; există telefon."
+    },
+    {
+      "id": "vtb-20",
+      "name": "🏰 Conacul boierului Janowski",
+      "decision": "reject",
+      "notes": "Muzeu, monument, lăcaș de cult sau patrimoniu de vizitare; în afara selecției cerute."
+    },
+    {
+      "id": "vtb-3",
+      "name": "🐝<Apiherb>🌿",
+      "decision": "approve_experience",
+      "notes": "Apiherb: Logistic cere rezervarea din timp a excursiei și există telefon public."
+    },
+    {
+      "id": "vtb-126",
+      "name": "👑🏕️ Tabăra Regelui Suedez Carol XII",
+      "decision": "reject",
+      "notes": "Muzeu, monument, lăcaș de cult sau patrimoniu de vizitare; în afara selecției cerute."
+    },
+    {
+      "id": "vtb-2",
+      "name": "👨‍👦‍👦 Monument Tatăl Eroilor",
+      "decision": "reject",
+      "notes": "Muzeu, monument, lăcaș de cult sau patrimoniu de vizitare; în afara selecției cerute."
+    },
+    {
+      "id": "vtb-5",
+      "name": "👩‍👦‍👦 Monument Mama Eroilor",
+      "decision": "reject",
+      "notes": "Muzeu, monument, lăcaș de cult sau patrimoniu de vizitare; în afara selecției cerute."
+    },
+    {
+      "id": "vtb-139",
+      "name": "💧 Fântâna Turcului",
+      "decision": "reject",
+      "notes": "Obiectiv natural de vizitare, fără serviciu organizat demonstrat în fișă."
+    },
+    {
+      "id": "vtb-244",
+      "name": "💧Izvorul alb",
+      "decision": "reject",
+      "notes": "Obiectiv natural de vizitare, fără serviciu organizat demonstrat în fișă."
+    },
+    {
+      "id": "vtb-42",
+      "name": "🧘‍♂️ Grota Călugărului",
+      "decision": "reject",
+      "notes": "Obiectiv natural de vizitare, fără serviciu organizat demonstrat în fișă."
+    },
+    {
+      "id": "vtb-162",
+      "name": "🌿 Valea Jidaucei",
+      "decision": "reject",
+      "notes": "Obiectiv natural de vizitare, fără serviciu organizat demonstrat în fișă."
+    },
+    {
+      "id": "vtb-161",
+      "name": "🏡 Muntean's home",
+      "decision": "approve_location",
+      "notes": "Unitate de cazare, gastronomie sau vinărie identificată în denumire; propusă ca locație pe hartă."
+    },
+    {
+      "id": "vtb-132",
+      "name": "🏰 Cetatea Tighina",
+      "decision": "reject",
+      "notes": "Muzeu, monument, lăcaș de cult sau patrimoniu de vizitare; în afara selecției cerute."
+    },
+    {
+      "id": "vtb-112",
+      "name": "Biserica de lemn🪵din Larga",
+      "decision": "reject",
+      "notes": "Muzeu, monument, lăcaș de cult sau patrimoniu de vizitare; în afara selecției cerute."
+    },
+    {
+      "id": "vtb-173",
+      "name": "🍷 Vinăria din Vale 🍇",
+      "decision": "approve_location",
+      "notes": "Unitate de cazare, gastronomie sau vinărie identificată în denumire; propusă ca locație pe hartă."
+    },
+    {
+      "id": "vtb-170",
+      "name": "🏡 Eco-Village Văleni 🛶",
+      "decision": "approve_location",
+      "notes": "Unitate de cazare, gastronomie sau vinărie identificată în denumire; propusă ca locație pe hartă."
+    },
+    {
+      "id": "vtb-172",
+      "name": "🐝 Prisaca din Luncă 🌳",
+      "decision": "approve_experience",
+      "notes": "Furnizor de activitate identificabil și contact public; rezervarea efectivă trebuie confirmată."
+    },
+    {
+      "id": "vtb-168",
+      "name": "🔥 Pensiunea „La gura cuptorului”",
+      "decision": "approve_location",
+      "notes": "Unitate de cazare, gastronomie sau vinărie identificată în denumire; propusă ca locație pe hartă."
+    },
+    {
+      "id": "vtb-188",
+      "name": "Atelierul gastronomic \"La Tanti Mașa\"",
+      "decision": "approve_experience",
+      "notes": "Furnizor de activitate identificabil și contact public; rezervarea efectivă trebuie confirmată."
+    },
+    {
+      "id": "vtb-181",
+      "name": "🏛️ Muzeul de Istorie și Etnografie Slobozia Mare",
+      "decision": "reject",
+      "notes": "Muzeu, monument, lăcaș de cult sau patrimoniu de vizitare; în afara selecției cerute."
+    },
+    {
+      "id": "vtb-180",
+      "name": "🏡 Casa Rurală \"La Bunica Clava\"",
+      "decision": "approve_location",
+      "notes": "Unitate de cazare, gastronomie sau vinărie identificată în denumire; propusă ca locație pe hartă."
+    },
+    {
+      "id": "vtb-175",
+      "name": "🥘 Gastronom Stoianovca 🛒",
+      "decision": "approve_experience",
+      "notes": "Gastronom Stoianovca: Logistic invită la rezervarea unui atelier culinar bulgăresc; există telefon."
+    },
+    {
+      "id": "vtb-150",
+      "name": "💜 lavanda.md",
+      "decision": "approve_location",
+      "notes": "Fișa publică declară afacere și descrie servicii; propusă ca locație, cu verificarea tipului."
+    },
+    {
+      "id": "vtb-101",
+      "name": "📜 Muzeul Satului",
+      "decision": "reject",
+      "notes": "Muzeu, monument, lăcaș de cult sau patrimoniu de vizitare; în afara selecției cerute."
+    },
+    {
+      "id": "vtb-227",
+      "name": "Arcul de Triumf de Chișinău",
+      "decision": "reject",
+      "notes": "Muzeu, monument, lăcaș de cult sau patrimoniu de vizitare; în afara selecției cerute."
+    },
+    {
+      "id": "vtb-130",
+      "name": "🍷Vinăria Cricova",
+      "decision": "approve_location",
+      "notes": "Unitate de cazare, gastronomie sau vinărie identificată în denumire; propusă ca locație pe hartă."
+    },
+    {
+      "id": "vtb-68",
+      "name": "Statuia Chipul lui Iisus Hristos ✝️",
+      "decision": "reject",
+      "notes": "Muzeu, monument, lăcaș de cult sau patrimoniu de vizitare; în afara selecției cerute."
+    },
+    {
+      "id": "vtb-50",
+      "name": "⛪ Biserica \"Sfântul Dumitru\" din Selemet",
+      "decision": "reject",
+      "notes": "Muzeu, monument, lăcaș de cult sau patrimoniu de vizitare; în afara selecției cerute."
+    },
+    {
+      "id": "vtb-79",
+      "name": "⛲ Fântâna cu cumpănă",
+      "decision": "reject",
+      "notes": "Obiectiv natural de vizitare, fără serviciu organizat demonstrat în fișă."
+    },
+    {
+      "id": "vtb-78",
+      "name": "🎨 Centru Cultural Multifuncțional Burebista 📚",
+      "decision": "reject",
+      "notes": "Muzeu, monument, lăcaș de cult sau patrimoniu de vizitare; în afara selecției cerute."
+    },
+    {
+      "id": "vtb-84",
+      "name": "🏟️ Stadion Sparta Selemet ⚽",
+      "decision": "reject",
+      "notes": "Stadion și spațiu de festival; fișa nu descrie serviciu turistic rezervabil."
+    },
+    {
+      "id": "vtb-48",
+      "name": "🏠 Pensiunea agroturistică \"La Mădălina\"",
+      "decision": "approve_location",
+      "notes": "Unitate de cazare, gastronomie sau vinărie identificată în denumire; propusă ca locație pe hartă."
+    },
+    {
+      "id": "vtb-82",
+      "name": "🏡 Căsuțele lecturii 📚",
+      "decision": "reject",
+      "notes": "Căsuțe pentru lectură și schimb de cărți; fără cazare sau activitate rezervabilă."
+    },
+    {
+      "id": "vtb-75",
+      "name": "💧Fântâna lui Moș Gheorghe",
+      "decision": "reject",
+      "notes": "Obiectiv natural de vizitare, fără serviciu organizat demonstrat în fișă."
+    },
+    {
+      "id": "vtb-49",
+      "name": "📜 Muzeul satului Selemet",
+      "decision": "reject",
+      "notes": "Muzeu, monument, lăcaș de cult sau patrimoniu de vizitare; în afara selecției cerute."
+    },
+    {
+      "id": "vtb-81",
+      "name": "🗿 Bustul lui Burebista",
+      "decision": "reject",
+      "notes": "Muzeu, monument, lăcaș de cult sau patrimoniu de vizitare; în afara selecției cerute."
+    },
+    {
+      "id": "vtb-240",
+      "name": "Cavoul familiei Macri-Donici",
+      "decision": "reject",
+      "notes": "Muzeu, monument, lăcaș de cult sau patrimoniu de vizitare; în afara selecției cerute."
+    },
+    {
+      "id": "vtb-249",
+      "name": "Conacul lui Nicolae Donici",
+      "decision": "reject",
+      "notes": "Muzeu, monument, lăcaș de cult sau patrimoniu de vizitare; în afara selecției cerute."
+    },
+    {
+      "id": "vtb-245",
+      "name": "Popasul de lângă Iaz",
+      "decision": "reject",
+      "notes": "Popas public lângă iaz, fără contact sau serviciu organizat; campingul liber nu este ofertă de cazare confirmată."
+    },
+    {
+      "id": "vtb-34",
+      "name": "⛪ Mănăstirea Rupestră \"Peștera\" 🪨",
+      "decision": "reject",
+      "notes": "Muzeu, monument, lăcaș de cult sau patrimoniu de vizitare; în afara selecției cerute."
+    },
+    {
+      "id": "vtb-30",
+      "name": "🌿 <Eco Resort Butuceni> 🍽️",
+      "decision": "approve_location",
+      "notes": "Unitate de cazare, gastronomie sau vinărie identificată în denumire; propusă ca locație pe hartă."
+    },
+    {
+      "id": "vtb-12",
+      "name": "🏛️ Muzeul de Etnografie din Butuceni",
+      "decision": "reject",
+      "notes": "Muzeu, monument, lăcaș de cult sau patrimoniu de vizitare; în afara selecției cerute."
+    },
+    {
+      "id": "vtb-32",
+      "name": "🏨 Hotel <Eco Resort Butuceni> 🌾",
+      "decision": "approve_location",
+      "notes": "Unitate de cazare, gastronomie sau vinărie identificată în denumire; propusă ca locație pe hartă."
+    },
+    {
+      "id": "vtb-26",
+      "name": "🏰 Ruinele citadelei medievale",
+      "decision": "reject",
+      "notes": "Muzeu, monument, lăcaș de cult sau patrimoniu de vizitare; în afara selecției cerute."
+    },
+    {
+      "id": "vtb-35",
+      "name": "🐄 Ferma veche 🐓",
+      "decision": "approve_experience",
+      "notes": "Mini fermă cu interacțiune cu animalele și telefon public; rezervarea trebuie confirmată."
+    },
+    {
+      "id": "vtb-31",
+      "name": "🔮 Sanctuarul geto-dacic",
+      "decision": "reject",
+      "notes": "Muzeu, monument, lăcaș de cult sau patrimoniu de vizitare; în afara selecției cerute."
+    },
+    {
+      "id": "vtb-33",
+      "name": "🕍 Mănăstirea rupestră a pârcălabului Bosie 🪨",
+      "decision": "reject",
+      "notes": "Muzeu, monument, lăcaș de cult sau patrimoniu de vizitare; în afara selecției cerute."
+    },
+    {
+      "id": "vtb-29",
+      "name": "🗿 Muzeul de Arheologie și Antropologie",
+      "decision": "reject",
+      "notes": "Muzeu, monument, lăcaș de cult sau patrimoniu de vizitare; în afara selecției cerute."
+    },
+    {
+      "id": "vtb-27",
+      "name": "🛁 Băile tătărești 🕌",
+      "decision": "reject",
+      "notes": "Ruinele băilor tătărești sunt patrimoniu arheologic, nu băi funcționale."
+    },
+    {
+      "id": "vtb-216",
+      "name": "🏛️ Școala din perioada interbelică",
+      "decision": "reject",
+      "notes": "Muzeu, monument, lăcaș de cult sau patrimoniu de vizitare; în afara selecției cerute."
+    },
+    {
+      "id": "vtb-207",
+      "name": "🏠 Muzeul Casa Meșteșugarilor🪡",
+      "decision": "reject",
+      "notes": "Muzeu, monument, lăcaș de cult sau patrimoniu de vizitare; în afara selecției cerute."
+    },
+    {
+      "id": "vtb-36",
+      "name": "<Poarta Neamului>",
+      "decision": "approve_location",
+      "notes": "Poarta Neamului oferă gastronomie, drumeții și cort în vie, cu telefon public în fișă."
+    },
+    {
+      "id": "vtb-117",
+      "name": "Manas Yurt Village🏕️",
+      "decision": "approve_location",
+      "notes": "Manas Yurt Village oferă iurte tradiționale și gastronomie, cu telefon public."
+    },
+    {
+      "id": "vtb-38",
+      "name": "Rezervația peisagistică Temeleuți 🍀",
+      "decision": "reject",
+      "notes": "Obiectiv natural de vizitare, fără serviciu organizat demonstrat în fișă."
+    },
+    {
+      "id": "vtb-111",
+      "name": "⛪ Biserica de lemn 🪵 din Horodiște",
+      "decision": "reject",
+      "notes": "Muzeu, monument, lăcaș de cult sau patrimoniu de vizitare; în afara selecției cerute."
+    },
+    {
+      "id": "vtb-99",
+      "name": "⛪ Biserica de lemn 🪵din Hoginești",
+      "decision": "reject",
+      "notes": "Muzeu, monument, lăcaș de cult sau patrimoniu de vizitare; în afara selecției cerute."
+    },
+    {
+      "id": "vtb-133",
+      "name": "⛪ Mănăstirea Hîrbovăț 🙏",
+      "decision": "reject",
+      "notes": "Muzeu, monument, lăcaș de cult sau patrimoniu de vizitare; în afara selecției cerute."
+    },
+    {
+      "id": "vtb-134",
+      "name": "⛪Mănăstirea Frumoasa🙏",
+      "decision": "reject",
+      "notes": "Muzeu, monument, lăcaș de cult sau patrimoniu de vizitare; în afara selecției cerute."
+    },
+    {
+      "id": "vtb-110",
+      "name": "⛪️ Biserica de lemn 🪵 din Palanca Călărași",
+      "decision": "reject",
+      "notes": "Muzeu, monument, lăcaș de cult sau patrimoniu de vizitare; în afara selecției cerute."
+    },
+    {
+      "id": "vtb-124",
+      "name": "⛪️ Biserica de lemn din Mîndra",
+      "decision": "reject",
+      "notes": "Muzeu, monument, lăcaș de cult sau patrimoniu de vizitare; în afara selecției cerute."
+    },
+    {
+      "id": "vtb-146",
+      "name": "🏚️ Conacul Dino Russo",
+      "decision": "reject",
+      "notes": "Muzeu, monument, lăcaș de cult sau patrimoniu de vizitare; în afara selecției cerute."
+    },
+    {
+      "id": "vtb-128",
+      "name": "🏡 Casa Olarului \"Vasilii Gonciari\"🏺",
+      "decision": "approve_experience",
+      "notes": "Casa Olarului: experiența «Povestea unui boț de lut», cu rezervare în avans și telefon public."
+    },
+    {
+      "id": "vtb-142",
+      "name": "🐎 Cimitirul Cailor",
+      "decision": "reject",
+      "notes": "Muzeu, monument, lăcaș de cult sau patrimoniu de vizitare; în afara selecției cerute."
+    },
+    {
+      "id": "vtb-159",
+      "name": "💜 Mov Herbs",
+      "decision": "verify",
+      "notes": "Mov Herbs: câmp de lavandă cu telefon, dar fără tarif, programare sau activitate organizată descrisă."
+    },
+    {
+      "id": "vtb-37",
+      "name": "💧Izvorul râului <Bîc>🌊",
+      "decision": "reject",
+      "notes": "Obiectiv natural de vizitare, fără serviciu organizat demonstrat în fișă."
+    },
+    {
+      "id": "vtb-164",
+      "name": "⛪ Mănăstirea Răciula 🙏",
+      "decision": "reject",
+      "notes": "Muzeu, monument, lăcaș de cult sau patrimoniu de vizitare; în afara selecției cerute."
+    },
+    {
+      "id": "vtb-209",
+      "name": "🌄 La Hâlboc",
+      "decision": "reject",
+      "notes": "La Hâlboc este punct de belvedere în natură; fără furnizor sau activitate rezervabilă."
+    },
+    {
+      "id": "vtb-228",
+      "name": "Biserica-muzeu \"Adormirea Maicii Domnului\"",
+      "decision": "reject",
+      "notes": "Muzeu, monument, lăcaș de cult sau patrimoniu de vizitare; în afara selecției cerute."
+    },
+    {
+      "id": "vtb-225",
+      "name": "⛪ Mănăstirea Noul Neamț Chițcani",
+      "decision": "reject",
+      "notes": "Muzeu, monument, lăcaș de cult sau patrimoniu de vizitare; în afara selecției cerute."
+    },
+    {
+      "id": "vtb-224",
+      "name": "🏛️ Complexul Memorial Cap de Pod <Chițcani>",
+      "decision": "reject",
+      "notes": "Muzeu, monument, lăcaș de cult sau patrimoniu de vizitare; în afara selecției cerute."
+    },
+    {
+      "id": "vtb-192",
+      "name": "⛪️ Mănăstirea Marta și Maria",
+      "decision": "reject",
+      "notes": "Muzeu, monument, lăcaș de cult sau patrimoniu de vizitare; în afara selecției cerute."
+    },
+    {
+      "id": "vtb-259",
+      "name": "Casa de Cultură Nicoreni",
+      "decision": "reject",
+      "notes": "Muzeu, monument, lăcaș de cult sau patrimoniu de vizitare; în afara selecției cerute."
+    },
+    {
+      "id": "vtb-248",
+      "name": "Catedrala Adormirii Maicii Domnului din Drochia",
+      "decision": "reject",
+      "notes": "Muzeu, monument, lăcaș de cult sau patrimoniu de vizitare; în afara selecției cerute."
+    },
+    {
+      "id": "vtb-260",
+      "name": "Cimitirul evreiesc din satul Zgurița",
+      "decision": "reject",
+      "notes": "Muzeu, monument, lăcaș de cult sau patrimoniu de vizitare; în afara selecției cerute."
+    },
+    {
+      "id": "vtb-261",
+      "name": "Cimitirul evreiesc din satul Zgurița",
+      "decision": "reject",
+      "notes": "Muzeu, monument, lăcaș de cult sau patrimoniu de vizitare; în afara selecției cerute."
+    },
+    {
+      "id": "vtb-263",
+      "name": "Cimitirul evreiesc din satul Zgurița",
+      "decision": "reject",
+      "notes": "Muzeu, monument, lăcaș de cult sau patrimoniu de vizitare; în afara selecției cerute."
+    },
+    {
+      "id": "vtb-217",
+      "name": "🏰Conacul Nicolae Russo",
+      "decision": "reject",
+      "notes": "Muzeu, monument, lăcaș de cult sau patrimoniu de vizitare; în afara selecției cerute."
+    },
+    {
+      "id": "vtb-220",
+      "name": "Agropensiunea „Vila cu struți” 🏡🐦",
+      "decision": "approve_location",
+      "notes": "Unitate de cazare, gastronomie sau vinărie identificată în denumire; propusă ca locație pe hartă."
+    },
+    {
+      "id": "vtb-213",
+      "name": "Pensiunea muzeu „La Alba Căsuță”🏠",
+      "decision": "reject",
+      "notes": "Muzeu, monument, lăcaș de cult sau patrimoniu de vizitare; în afara selecției cerute."
+    },
+    {
+      "id": "vtb-218",
+      "name": "⛪ Biserica de lemn din Macareuca",
+      "decision": "reject",
+      "notes": "Muzeu, monument, lăcaș de cult sau patrimoniu de vizitare; în afara selecției cerute."
+    },
+    {
+      "id": "vtb-221",
+      "name": "🌊 Izvorul Mare din Cotova",
+      "decision": "reject",
+      "notes": "Obiectiv natural de vizitare, fără serviciu organizat demonstrat în fișă."
+    },
+    {
+      "id": "vtb-219",
+      "name": "🌳 Vila cu Parc Mîndîc",
+      "decision": "reject",
+      "notes": "Obiectiv natural de vizitare, fără serviciu organizat demonstrat în fișă."
+    },
+    {
+      "id": "vtb-222",
+      "name": "🏛️ Stela simbolică a turismului rural din Cotova",
+      "decision": "reject",
+      "notes": "Muzeu, monument, lăcaș de cult sau patrimoniu de vizitare; în afara selecției cerute."
+    },
+    {
+      "id": "vtb-200",
+      "name": "❤️ Vila Dorului",
+      "decision": "approve_location",
+      "notes": "Vila Dorului este hotel și restaurant cu piscină și wellness, conform serviciilor."
+    },
+    {
+      "id": "vtb-203",
+      "name": "🏖️ Laguna Family Resort",
+      "decision": "approve_location",
+      "notes": "Unitate de cazare, gastronomie sau vinărie identificată în denumire; propusă ca locație pe hartă."
+    },
+    {
+      "id": "vtb-201",
+      "name": "🏛️🪕 Muzeul de Istorie și Etnografie din Molovata Nouă",
+      "decision": "reject",
+      "notes": "Muzeu, monument, lăcaș de cult sau patrimoniu de vizitare; în afara selecției cerute."
+    },
+    {
+      "id": "vtb-202",
+      "name": "🏡 Muzeul Țăranului",
+      "decision": "reject",
+      "notes": "Muzeu, monument, lăcaș de cult sau patrimoniu de vizitare; în afara selecției cerute."
+    },
+    {
+      "id": "vtb-199",
+      "name": "🔥 Casa Sobarului",
+      "decision": "approve_location",
+      "notes": "Casa Sobarului este restaurant rustic și pensiune cu bucate la cuptor; există telefon."
+    },
+    {
+      "id": "vtb-96",
+      "name": "⛪ Biserica de lemn🪵din Tîrnova",
+      "decision": "reject",
+      "notes": "Muzeu, monument, lăcaș de cult sau patrimoniu de vizitare; în afara selecției cerute."
+    },
+    {
+      "id": "vtb-151",
+      "name": "🕊️ Complexului Memorial „Părintele Sofian Boghiu”",
+      "decision": "reject",
+      "notes": "Muzeu, monument, lăcaș de cult sau patrimoniu de vizitare; în afara selecției cerute."
+    },
+    {
+      "id": "vtb-177",
+      "name": "💜 Miros de Lavandă",
+      "decision": "verify",
+      "notes": "Miros de Lavandă are telefon și câmp de lavandă, dar nu sunt descrise servicii sau rezervare."
+    },
+    {
+      "id": "vtb-44",
+      "name": "🌊 Cotul Răutului",
+      "decision": "reject",
+      "notes": "Obiectiv natural de vizitare, fără serviciu organizat demonstrat în fișă."
+    },
+    {
+      "id": "vtb-190",
+      "name": "Pensiunea Popas Regal 👑",
+      "decision": "approve_location",
+      "notes": "Unitate de cazare, gastronomie sau vinărie identificată în denumire; propusă ca locație pe hartă."
+    },
+    {
+      "id": "vtb-100",
+      "name": "⛪ Biserica de lemn din <Limbenii Vechi>",
+      "decision": "reject",
+      "notes": "Muzeu, monument, lăcaș de cult sau patrimoniu de vizitare; în afara selecției cerute."
+    },
+    {
+      "id": "vtb-154",
+      "name": "⛪️ Polski kościół",
+      "decision": "reject",
+      "notes": "Polski kościół este biserică catolică; exclus ca lăcaș de cult."
+    },
+    {
+      "id": "vtb-155",
+      "name": "🏛️ Muzeul Polonezilor din Stârcea",
+      "decision": "reject",
+      "notes": "Muzeu, monument, lăcaș de cult sau patrimoniu de vizitare; în afara selecției cerute."
+    },
+    {
+      "id": "vtb-156",
+      "name": "💜 Colina Levănțică",
+      "decision": "approve_location",
+      "notes": "Fișa publică declară afacere și descrie servicii; propusă ca locație, cu verificarea tipului."
+    },
+    {
+      "id": "vtb-157",
+      "name": "🦬 Rezervația „Pădurea Domnească”",
+      "decision": "reject",
+      "notes": "Obiectiv natural de vizitare, fără serviciu organizat demonstrat în fișă."
+    },
+    {
+      "id": "vtb-140",
+      "name": "🪨 Cheile Buteşti",
+      "decision": "reject",
+      "notes": "Obiectiv natural de vizitare, fără serviciu organizat demonstrat în fișă."
+    },
+    {
+      "id": "vtb-191",
+      "name": "✨ La Vatra Horelor ✨",
+      "decision": "reject",
+      "notes": "La Vatra Horelor este spațiu public de popas cu foișoare; fără furnizor sau serviciu rezervabil."
+    },
+    {
+      "id": "vtb-189",
+      "name": "🏠 Casa rurala Catinca",
+      "decision": "approve_location",
+      "notes": "Unitate de cazare, gastronomie sau vinărie identificată în denumire; propusă ca locație pe hartă."
+    },
+    {
+      "id": "vtb-136",
+      "name": "Casa Trandafirului🌹",
+      "decision": "approve_location",
+      "notes": "Grădină privată cu vizite pe bază de programare și telefon public; sezon de clarificat."
+    },
+    {
+      "id": "vtb-138",
+      "name": "⛪ Biserica Acoperământul Maicii Domnului",
+      "decision": "reject",
+      "notes": "Muzeu, monument, lăcaș de cult sau patrimoniu de vizitare; în afara selecției cerute."
+    },
+    {
+      "id": "vtb-116",
+      "name": "⛪ Mănăstirea Hâncu",
+      "decision": "reject",
+      "notes": "Muzeu, monument, lăcaș de cult sau patrimoniu de vizitare; în afara selecției cerute."
+    },
+    {
+      "id": "vtb-114",
+      "name": "⛪ Mănăstirea Negrea",
+      "decision": "reject",
+      "notes": "Muzeu, monument, lăcaș de cult sau patrimoniu de vizitare; în afara selecției cerute."
+    },
+    {
+      "id": "vtb-121",
+      "name": "🍷 Vinăria Hîncești",
+      "decision": "approve_location",
+      "notes": "Unitate de cazare, gastronomie sau vinărie identificată în denumire; propusă ca locație pe hartă."
+    },
+    {
+      "id": "vtb-120",
+      "name": "🏔️ Dealul Morilor",
+      "decision": "reject",
+      "notes": "Obiectiv natural de vizitare, fără serviciu organizat demonstrat în fișă."
+    },
+    {
+      "id": "vtb-129",
+      "name": "🏛️ Casa de cultură Bobeica",
+      "decision": "reject",
+      "notes": "Muzeu, monument, lăcaș de cult sau patrimoniu de vizitare; în afara selecției cerute."
+    },
+    {
+      "id": "vtb-94",
+      "name": "🏛️ Muzeul de Istorie și Etnografie din Mingir",
+      "decision": "reject",
+      "notes": "Muzeu, monument, lăcaș de cult sau patrimoniu de vizitare; în afara selecției cerute."
+    },
+    {
+      "id": "vtb-113",
+      "name": "🏛️Muzeul de Istorie și Etnografie din Ciuciuleni 📜",
+      "decision": "reject",
+      "notes": "Muzeu, monument, lăcaș de cult sau patrimoniu de vizitare; în afara selecției cerute."
+    },
+    {
+      "id": "vtb-115",
+      "name": "🏡 Muzeul Satului Negrea",
+      "decision": "reject",
+      "notes": "Muzeu, monument, lăcaș de cult sau patrimoniu de vizitare; în afara selecției cerute."
+    },
+    {
+      "id": "vtb-125",
+      "name": "🏰 Conacul Manuc Bey",
+      "decision": "reject",
+      "notes": "Muzeu, monument, lăcaș de cult sau patrimoniu de vizitare; în afara selecției cerute."
+    },
+    {
+      "id": "vtb-122",
+      "name": "👑 Curtea Domnească Lăpușna",
+      "decision": "reject",
+      "notes": "Muzeu, monument, lăcaș de cult sau patrimoniu de vizitare; în afara selecției cerute."
+    },
+    {
+      "id": "vtb-137",
+      "name": "💧Fântâna Cocostârc 🕊️",
+      "decision": "reject",
+      "notes": "Obiectiv natural de vizitare, fără serviciu organizat demonstrat în fișă."
+    },
+    {
+      "id": "vtb-95",
+      "name": "📜 Complexul Memorial Mingir 🕊️",
+      "decision": "reject",
+      "notes": "Muzeu, monument, lăcaș de cult sau patrimoniu de vizitare; în afara selecției cerute."
+    },
+    {
+      "id": "vtb-160",
+      "name": "🌊 Lacul Negrea",
+      "decision": "reject",
+      "notes": "Obiectiv natural de vizitare, fără serviciu organizat demonstrat în fișă."
+    },
+    {
+      "id": "vtb-197",
+      "name": "🍷 Crama Tronciu",
+      "decision": "approve_location",
+      "notes": "Unitate de cazare, gastronomie sau vinărie identificată în denumire; propusă ca locație pe hartă."
+    },
+    {
+      "id": "vtb-230",
+      "name": "Asconi",
+      "decision": "approve_location",
+      "notes": "Asconi este vinărie cu website public în Logistic; contactul direct și rezervarea se completează ulterior."
+    },
+    {
+      "id": "vtb-176",
+      "name": "⛲ Fântânile din Larga",
+      "decision": "reject",
+      "notes": "Obiectiv natural de vizitare, fără serviciu organizat demonstrat în fișă."
+    },
+    {
+      "id": "vtb-193",
+      "name": "🌬️ Moara de vînt",
+      "decision": "reject",
+      "notes": "Muzeu, monument, lăcaș de cult sau patrimoniu de vizitare; în afara selecției cerute."
+    },
+    {
+      "id": "vtb-211",
+      "name": "🏕️ Glamping Moldova – Equestrian Glamping",
+      "decision": "approve_location",
+      "notes": "Unitate de cazare, gastronomie sau vinărie identificată în denumire; propusă ca locație pe hartă."
+    },
+    {
+      "id": "vtb-186",
+      "name": "🏡 Pensiunea Doina și Ion",
+      "decision": "approve_location",
+      "notes": "Unitate de cazare, gastronomie sau vinărie identificată în denumire; propusă ca locație pe hartă."
+    },
+    {
+      "id": "vtb-183",
+      "name": "🍇 Vinăria Mileștii Mici",
+      "decision": "approve_location",
+      "notes": "Unitate de cazare, gastronomie sau vinărie identificată în denumire; propusă ca locație pe hartă."
+    },
+    {
+      "id": "vtb-184",
+      "name": "🍷 Vinaria Agrici",
+      "decision": "approve_location",
+      "notes": "Unitate de cazare, gastronomie sau vinărie identificată în denumire; propusă ca locație pe hartă."
+    },
+    {
+      "id": "vtb-198",
+      "name": "🏰Turnul Alb",
+      "decision": "approve_location",
+      "notes": "Turnul Alb descrie restaurant, piscină, foișoare și servicii de agrement."
+    },
+    {
+      "id": "vtb-212",
+      "name": "🦁 ZooClub Bardar",
+      "decision": "approve_location",
+      "notes": "ZooClub Bardar oferă vizite și activități cu animale; propus ca locație de agrement."
+    },
+    {
+      "id": "vtb-15",
+      "name": "🌳 Parcul din satul Milești 🌳",
+      "decision": "reject",
+      "notes": "Muzeu, monument, lăcaș de cult sau patrimoniu de vizitare; în afara selecției cerute."
+    },
+    {
+      "id": "vtb-39",
+      "name": "🌿 Rezervația peisagistică Cazimir-Milești",
+      "decision": "reject",
+      "notes": "Obiectiv natural de vizitare, fără serviciu organizat demonstrat în fișă."
+    },
+    {
+      "id": "vtb-19",
+      "name": "🏔️Dealul Bălănești",
+      "decision": "reject",
+      "notes": "Obiectiv natural de vizitare, fără serviciu organizat demonstrat în fișă."
+    },
+    {
+      "id": "vtb-13",
+      "name": "🏕️ Camping <\"Pe toloacă\"> 🌲",
+      "decision": "approve_location",
+      "notes": "Unitate de cazare, gastronomie sau vinărie identificată în denumire; propusă ca locație pe hartă."
+    },
+    {
+      "id": "vtb-98",
+      "name": "🏰 Conacul Gonata",
+      "decision": "reject",
+      "notes": "Muzeu, monument, lăcaș de cult sau patrimoniu de vizitare; în afara selecției cerute."
+    },
+    {
+      "id": "vtb-14",
+      "name": "🏰 Conacul boierului Tudor Cazimir",
+      "decision": "reject",
+      "notes": "Muzeu, monument, lăcaș de cult sau patrimoniu de vizitare; în afara selecției cerute."
+    },
+    {
+      "id": "vtb-17",
+      "name": "💧Popas <„La fântâniță”> 🚶‍♂️",
+      "decision": "reject",
+      "notes": "Obiectiv natural de vizitare, fără serviciu organizat demonstrat în fișă."
+    },
+    {
+      "id": "vtb-16",
+      "name": "🪵 Popas „La scrânciob” 🚶‍♂️",
+      "decision": "reject",
+      "notes": "Popas public cu scrânciob și arbore; fără gazdă, contact sau serviciu rezervabil."
+    },
+    {
+      "id": "vtb-252",
+      "name": "Camera-Muzeu „Emil Loteanu”",
+      "decision": "reject",
+      "notes": "Muzeu, monument, lăcaș de cult sau patrimoniu de vizitare; în afara selecției cerute."
+    },
+    {
+      "id": "vtb-237",
+      "name": "Casa-muzeu „Constantin Stamati”",
+      "decision": "reject",
+      "notes": "Muzeu, monument, lăcaș de cult sau patrimoniu de vizitare; în afara selecției cerute."
+    },
+    {
+      "id": "vtb-238",
+      "name": "Eco Glamping „Ciudnaia Dolină”",
+      "decision": "approve_location",
+      "notes": "Unitate de cazare, gastronomie sau vinărie identificată în denumire; propusă ca locație pe hartă."
+    },
+    {
+      "id": "vtb-254",
+      "name": "Fântâna Cadânei 💧",
+      "decision": "reject",
+      "notes": "Obiectiv natural de vizitare, fără serviciu organizat demonstrat în fișă."
+    },
+    {
+      "id": "vtb-251",
+      "name": "Izvorul Mănăstirii Călărășeuca",
+      "decision": "reject",
+      "notes": "Muzeu, monument, lăcaș de cult sau patrimoniu de vizitare; în afara selecției cerute."
+    },
+    {
+      "id": "vtb-255",
+      "name": "Lacul Albastru 🏞️✨",
+      "decision": "reject",
+      "notes": "Obiectiv natural de vizitare, fără serviciu organizat demonstrat în fișă."
+    },
+    {
+      "id": "vtb-258",
+      "name": "Moara de apă",
+      "decision": "reject",
+      "notes": "Muzeu, monument, lăcaș de cult sau patrimoniu de vizitare; în afara selecției cerute."
+    },
+    {
+      "id": "vtb-234",
+      "name": "Mănăstirea „Adormirea Maicii Domnului” din Călărășeuca",
+      "decision": "reject",
+      "notes": "Muzeu, monument, lăcaș de cult sau patrimoniu de vizitare; în afara selecției cerute."
+    },
+    {
+      "id": "vtb-236",
+      "name": "Pensiunea „La Beciul din Stâncă” 🏡",
+      "decision": "approve_location",
+      "notes": "Unitate de cazare, gastronomie sau vinărie identificată în denumire; propusă ca locație pe hartă."
+    },
+    {
+      "id": "vtb-253",
+      "name": "Podul Turcesc din Călărășeuca",
+      "decision": "reject",
+      "notes": "Muzeu, monument, lăcaș de cult sau patrimoniu de vizitare; în afara selecției cerute."
+    },
+    {
+      "id": "vtb-256",
+      "name": "⛪ Biserica „Adormirea Maicii Domnului” ☦️",
+      "decision": "reject",
+      "notes": "Muzeu, monument, lăcaș de cult sau patrimoniu de vizitare; în afara selecției cerute."
+    },
+    {
+      "id": "vtb-246",
+      "name": "💚 Inima Moldovei",
+      "decision": "reject",
+      "notes": "Inima Moldovei este insulă naturală în Nistru; fără servicii rezervabile descrise."
+    },
+    {
+      "id": "vtb-257",
+      "name": "🧗‍♂️ Râpa lui Carp (Karpov Yar) 🌿",
+      "decision": "reject",
+      "notes": "Obiectiv natural de vizitare, fără serviciu organizat demonstrat în fișă."
+    },
+    {
+      "id": "vtb-229",
+      "name": "Epoca din Piatră",
+      "decision": "approve_location",
+      "notes": "Epoca din Piatră este restaurant în peșteră; fișa recomandă rezervarea mesei pentru grupuri și oferă telefon."
+    },
+    {
+      "id": "vtb-208",
+      "name": "🌾🐑 Eco Ferma OVIDA 🚜",
+      "decision": "approve_experience",
+      "notes": "Eco Ferma OVIDA: ateliere de brânză/unt și activități la fermă; excursiile se rezervă preferabil cu două săptămâni înainte."
+    },
+    {
+      "id": "vtb-28",
+      "name": "🏰 Palatul Pârcălabului",
+      "decision": "reject",
+      "notes": "Obiectiv natural de vizitare, fără serviciu organizat demonstrat în fișă."
+    },
+    {
+      "id": "vtb-11",
+      "name": "🧶 <”Arta Rustică”>",
+      "decision": "approve_experience",
+      "notes": "Arta Rustică: masterclass de țesut cu programare în avans; muzeul nu se propune ca fișă separată."
+    },
+    {
+      "id": "vtb-169",
+      "name": "🚜 Eco-ferma Hill&Valley",
+      "decision": "approve_location",
+      "notes": "Eco-ferma Hill&Valley descrie un complex agroturistic cu cazare și activități."
+    },
+    {
+      "id": "vtb-182",
+      "name": "🍷 Crama Domeniile Pană 🍇🏡",
+      "decision": "approve_location",
+      "notes": "Unitate de cazare, gastronomie sau vinărie identificată în denumire; propusă ca locație pe hartă."
+    },
+    {
+      "id": "vtb-171",
+      "name": "🏛️ Muzeul de Istorie și Etnografie Crihana Veche",
+      "decision": "reject",
+      "notes": "Muzeu, monument, lăcaș de cult sau patrimoniu de vizitare; în afara selecției cerute."
+    },
+    {
+      "id": "vtb-174",
+      "name": "🏡 Casa Dulce Colibași 🍰",
+      "decision": "approve_location",
+      "notes": "Casa Dulce Colibași descrie meniu de prăjituri și băuturi, pentru grupuri de până la 15 persoane."
+    },
+    {
+      "id": "vtb-195",
+      "name": "⛪️ Biserica din Mileștii Mici",
+      "decision": "reject",
+      "notes": "Muzeu, monument, lăcaș de cult sau patrimoniu de vizitare; în afara selecției cerute."
+    },
+    {
+      "id": "vtb-166",
+      "name": "🖼️ Galeria Colecțiilor lui Petru Costin",
+      "decision": "reject",
+      "notes": "Muzeu, monument, lăcaș de cult sau patrimoniu de vizitare; în afara selecției cerute."
+    },
+    {
+      "id": "vtb-196",
+      "name": "🪺 <CUIB>",
+      "decision": "approve_location",
+      "notes": "CUIB descrie restaurant, evenimente și catering."
+    },
+    {
+      "id": "vtb-205",
+      "name": "⛪ Ruinele bisericii de mijlocire din Rașkov",
+      "decision": "reject",
+      "notes": "Muzeu, monument, lăcaș de cult sau patrimoniu de vizitare; în afara selecției cerute."
+    },
+    {
+      "id": "vtb-214",
+      "name": "<Oleandra Floare de colț>",
+      "decision": "approve_location",
+      "notes": "Oleandra Floare de colț oferă restaurant și pensiune, descrise în fișă."
+    },
+    {
+      "id": "vtb-231",
+      "name": "Goian Glamping",
+      "decision": "approve_location",
+      "notes": "Unitate de cazare, gastronomie sau vinărie identificată în denumire; propusă ca locație pe hartă."
+    },
+    {
+      "id": "vtb-204",
+      "name": "🕍 Ruinele sinagogii din Rașkov",
+      "decision": "reject",
+      "notes": "Muzeu, monument, lăcaș de cult sau patrimoniu de vizitare; în afara selecției cerute."
+    },
+    {
+      "id": "vtb-158",
+      "name": "🪶 Țara Bâtlanilor",
+      "decision": "reject",
+      "notes": "Obiectiv natural de vizitare, fără serviciu organizat demonstrat în fișă."
+    },
+    {
+      "id": "vtb-226",
+      "name": "Casa de meșteșuguri Aievea",
+      "decision": "verify",
+      "notes": "AIEVEA oferă ateliere cu programare și cazare, dar fișa nu publică un contact de rezervare; de completat."
+    },
+    {
+      "id": "vtb-104",
+      "name": "⛪ Mănăstirea <rupestră> Țipova",
+      "decision": "reject",
+      "notes": "Muzeu, monument, lăcaș de cult sau patrimoniu de vizitare; în afara selecției cerute."
+    },
+    {
+      "id": "vtb-178",
+      "name": "✨ Pensiunea Muze",
+      "decision": "reject",
+      "notes": "Muzeu, monument, lăcaș de cult sau patrimoniu de vizitare; în afara selecției cerute."
+    },
+    {
+      "id": "vtb-103",
+      "name": "🌊 Cascada Mare Țipova",
+      "decision": "reject",
+      "notes": "Obiectiv natural de vizitare, fără serviciu organizat demonstrat în fișă."
+    },
+    {
+      "id": "vtb-123",
+      "name": "🌊 Cascada Mică Țipova",
+      "decision": "reject",
+      "notes": "Obiectiv natural de vizitare, fără serviciu organizat demonstrat în fișă."
+    },
+    {
+      "id": "vtb-108",
+      "name": "🏞️ Beldevere Țipova",
+      "decision": "reject",
+      "notes": "Obiectiv natural de vizitare, fără serviciu organizat demonstrat în fișă."
+    },
+    {
+      "id": "vtb-179",
+      "name": "🏡 Villa Aeterna",
+      "decision": "approve_location",
+      "notes": "Villa Aeterna oferă camping și casă de cazare, cu rezervare în avans; telefoanele din fișă diferă."
+    },
+    {
+      "id": "vtb-127",
+      "name": "🐐 Fromage",
+      "decision": "approve_experience",
+      "notes": "Fromage: degustări și plimbare cu căruța; Logistic precizează rezervarea din timp și un telefon distinct de Contact."
+    },
+    {
+      "id": "vtb-109",
+      "name": "🪨 Cetatea geto-dacică de la Țipova",
+      "decision": "reject",
+      "notes": "Muzeu, monument, lăcaș de cult sau patrimoniu de vizitare; în afara selecției cerute."
+    },
+    {
+      "id": "vtb-141",
+      "name": "🏞️ Suta de Movile",
+      "decision": "reject",
+      "notes": "Obiectiv natural de vizitare, fără serviciu organizat demonstrat în fișă."
+    },
+    {
+      "id": "vtb-152",
+      "name": "🪨 Defileul Duruitoarea Veche",
+      "decision": "reject",
+      "notes": "Obiectiv natural de vizitare, fără serviciu organizat demonstrat în fișă."
+    },
+    {
+      "id": "vtb-153",
+      "name": "🪨 Grota Duruitoarea",
+      "decision": "reject",
+      "notes": "Obiectiv natural de vizitare, fără serviciu organizat demonstrat în fișă."
+    },
+    {
+      "id": "vtb-105",
+      "name": "Lumânarea Recunoștinței 🕯️",
+      "decision": "reject",
+      "notes": "Muzeu, monument, lăcaș de cult sau patrimoniu de vizitare; în afara selecției cerute."
+    },
+    {
+      "id": "vtb-118",
+      "name": "⛪ Chilia Lui Bechir",
+      "decision": "reject",
+      "notes": "Muzeu, monument, lăcaș de cult sau patrimoniu de vizitare; în afara selecției cerute."
+    },
+    {
+      "id": "vtb-106",
+      "name": "🏞️ Dealul Țiganilor",
+      "decision": "reject",
+      "notes": "Obiectiv natural de vizitare, fără serviciu organizat demonstrat în fișă."
+    },
+    {
+      "id": "vtb-102",
+      "name": "🏰 Cetatea Soroca",
+      "decision": "reject",
+      "notes": "Muzeu, monument, lăcaș de cult sau patrimoniu de vizitare; în afara selecției cerute."
+    },
+    {
+      "id": "vtb-119",
+      "name": "🪨 Râpa lui Bechir",
+      "decision": "reject",
+      "notes": "Obiectiv natural de vizitare, fără serviciu organizat demonstrat în fișă."
+    },
+    {
+      "id": "vtb-86",
+      "name": "⛪ Biserica de lemn 🪵 din Vorniceni",
+      "decision": "reject",
+      "notes": "Muzeu, monument, lăcaș de cult sau patrimoniu de vizitare; în afara selecției cerute."
+    },
+    {
+      "id": "vtb-107",
+      "name": "⛪️ Mănăstirea Căpriana",
+      "decision": "reject",
+      "notes": "Muzeu, monument, lăcaș de cult sau patrimoniu de vizitare; în afara selecției cerute."
+    },
+    {
+      "id": "vtb-85",
+      "name": "🌿 <Vatra Dumeniului>",
+      "decision": "reject",
+      "notes": "Vatra Dumeniului este prezentată ca muzeu; exclus conform criteriului cerut."
+    },
+    {
+      "id": "vtb-88",
+      "name": "🌿 Rezervația Științifică Codrii 🌳",
+      "decision": "reject",
+      "notes": "Obiectiv natural de vizitare, fără serviciu organizat demonstrat în fișă."
+    },
+    {
+      "id": "vtb-92",
+      "name": "🍇 Vinăria Vornic",
+      "decision": "approve_location",
+      "notes": "Unitate de cazare, gastronomie sau vinărie identificată în denumire; propusă ca locație pe hartă."
+    },
+    {
+      "id": "vtb-149",
+      "name": "🏛️ Muzeul Sovietic în aer liber",
+      "decision": "reject",
+      "notes": "Muzeu, monument, lăcaș de cult sau patrimoniu de vizitare; în afara selecției cerute."
+    },
+    {
+      "id": "vtb-91",
+      "name": "🏞️ Belvedere \"La Chetrărie\"",
+      "decision": "reject",
+      "notes": "Obiectiv natural de vizitare, fără serviciu organizat demonstrat în fișă."
+    },
+    {
+      "id": "vtb-89",
+      "name": "🏡 Conacul Mierii 🍯",
+      "decision": "approve_location",
+      "notes": "Conacul Mierii oferă explicit cazare, alimentare, excursii și degustări, cu două telefoane publice."
+    },
+    {
+      "id": "vtb-147",
+      "name": "🏡 Vila lui Nea Stan",
+      "decision": "approve_location",
+      "notes": "Vila lui Nea Stan are serviciul «Pensiune» declarat și telefon public."
+    },
+    {
+      "id": "vtb-215",
+      "name": "🏰 Chateau Cojușna",
+      "decision": "approve_location",
+      "notes": "Unitate de cazare, gastronomie sau vinărie identificată în denumire; propusă ca locație pe hartă."
+    },
+    {
+      "id": "vtb-93",
+      "name": "🏰 Conacul Ralli",
+      "decision": "reject",
+      "notes": "Muzeu, monument, lăcaș de cult sau patrimoniu de vizitare; în afara selecției cerute."
+    },
+    {
+      "id": "vtb-90",
+      "name": "💧 Izvorul Zamfirei 🌸",
+      "decision": "reject",
+      "notes": "Obiectiv natural de vizitare, fără serviciu organizat demonstrat în fișă."
+    },
+    {
+      "id": "vtb-131",
+      "name": "💧 Izvorul lui Avram",
+      "decision": "reject",
+      "notes": "Obiectiv natural de vizitare, fără serviciu organizat demonstrat în fișă."
+    },
+    {
+      "id": "vtb-148",
+      "name": "🛢️Butoiul din Scoreni",
+      "decision": "reject",
+      "notes": "Obiectiv natural de vizitare, fără serviciu organizat demonstrat în fișă."
+    },
+    {
+      "id": "vtb-167",
+      "name": "🌳 Stejarul lui Ștefan cel mare",
+      "decision": "reject",
+      "notes": "Obiectiv natural de vizitare, fără serviciu organizat demonstrat în fișă."
+    },
+    {
+      "id": "vtb-165",
+      "name": "🏡 Villa Radova Căpriana",
+      "decision": "approve_location",
+      "notes": "Villa Radova Căpriana declară serviciul «Cazare»."
+    },
+    {
+      "id": "vtb-43",
+      "name": "⛪ Biserica de piatră",
+      "decision": "reject",
+      "notes": "Muzeu, monument, lăcaș de cult sau patrimoniu de vizitare; în afara selecției cerute."
+    },
+    {
+      "id": "vtb-47",
+      "name": "❤️ Puntea Îndrăgostiților 🌉",
+      "decision": "reject",
+      "notes": "Obiectiv natural de vizitare, fără serviciu organizat demonstrat în fișă."
+    },
+    {
+      "id": "vtb-46",
+      "name": "🌕 Movila cu semilună",
+      "decision": "reject",
+      "notes": "Obiectiv natural de vizitare, fără serviciu organizat demonstrat în fișă."
+    },
+    {
+      "id": "vtb-41",
+      "name": "🏛️ Muzeul <\"Bașca lui Țâra\">",
+      "decision": "reject",
+      "notes": "Muzeu, monument, lăcaș de cult sau patrimoniu de vizitare; în afara selecției cerute."
+    },
+    {
+      "id": "vtb-45",
+      "name": "🪨 Grumazul",
+      "decision": "reject",
+      "notes": "Obiectiv natural de vizitare, fără serviciu organizat demonstrat în fișă."
+    },
+    {
+      "id": "vtb-206",
+      "name": "⛪ Biserica Catolică Sfântul Kaetan din Rașcov",
+      "decision": "reject",
+      "notes": "Muzeu, monument, lăcaș de cult sau patrimoniu de vizitare; în afara selecției cerute."
+    }
+  ]
+}

@@ -14,8 +14,6 @@ import {
   MapPin,
   Menu,
   Search,
-  SlidersHorizontal,
-  Star,
   X,
   Leaf,
   Map,
@@ -30,7 +28,8 @@ import {
   filterPlaces,
 } from "@/features/places/data";
 import {
-  isTourAgency,
+  experienceSubcategories,
+  placeSubcategories,
   matchesExploreGroup,
   type ExploreGroup,
 } from "@/features/places/exploration";
@@ -55,7 +54,7 @@ const initialFilters: PlaceFilters = {
   category: "all",
   region: "all",
   minRating: 0,
-  maxPrice: 2000,
+  maxPrice: Number.POSITIVE_INFINITY,
   savedOnly: false,
 };
 export function Explorer({
@@ -82,11 +81,12 @@ export function Explorer({
   const router = useRouter();
   const categories = initialCategories;
   const places = useMemo(
-    () => initialPlaces.filter((p) => !isTourAgency(p)),
+    () => initialPlaces.filter((p) => matchesExploreGroup(p, "all")),
     [initialPlaces],
   );
   const [group, setGroup] = useState<ExploreGroup>("all");
   const [detailOpen, setDetailOpen] = useState(false);
+  const [subcategory, setSubcategory] = useState<string | null>(null);
   const originView = useRef<"map" | "list">(initialMobileView);
   const listScroll = useRef(0);
   const sidebarRef = useRef<HTMLElement>(null);
@@ -103,13 +103,13 @@ export function Explorer({
   const [filters, setFilters] = useState(initialFilters);
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [saved, setSaved] = useState<string[]>([]);
-  const [filterOpen, setFilterOpen] = useState(false);
   const [sort, setSort] = useState("recommended");
   const [notice, setNotice] = useState("");
   const [mobileView, setMobileView] = useState<"list" | "map">(
     initialMobileView,
   );
   const [infoOpen, setInfoOpen] = useState(false);
+
   useEffect(() => {
     try {
       const value = JSON.parse(
@@ -135,7 +135,11 @@ export function Explorer({
   );
   const filtered = useMemo(() => {
     const list = filterPlaces(
-      localizedPlaces.filter((p) => matchesExploreGroup(p, group)),
+      localizedPlaces.filter(
+        (p) =>
+          matchesExploreGroup(p, group) &&
+          (!subcategory || placeSubcategories(p).includes(subcategory)),
+      ),
       filters,
       saved,
     );
@@ -146,7 +150,7 @@ export function Explorer({
           ? a.price - b.price
           : Number(b.featured || false) - Number(a.featured || false),
     );
-  }, [filters, saved, sort, localizedPlaces, group]);
+  }, [filters, saved, sort, localizedPlaces, group, subcategory]);
   const select = useCallback((id: string, source: "map" | "list") => {
     originView.current = source;
     listScroll.current =
@@ -169,11 +173,6 @@ export function Explorer({
     });
   };
   const selected = localizedPlaces.find((p) => p.id === selectedId);
-  const activeFilters =
-    Number(filters.category !== "all") +
-    Number(filters.region !== "all") +
-    Number(filters.minRating > 0) +
-    Number(f.prices && filters.maxPrice < 2000);
   const changeQuery = (query: string) => {
     geoController.current?.abort();
     setGeoBusy(false);
@@ -210,6 +209,7 @@ export function Explorer({
     setMobileView("map");
   };
   const planRoute = (p: Place) => {
+    if (p.routeAvailable === false) return;
     setRouteDestination({
       id: p.id,
       label: p.name,
@@ -239,6 +239,7 @@ export function Explorer({
           onClick={() => {
             setFilters(initialFilters);
             setGroup("all");
+            setSubcategory(null);
             setSelectedId(null);
             setDetailOpen(false);
             setSearchPoint(null);
@@ -496,7 +497,13 @@ export function Explorer({
                             )
                           : t("Încearcă altă căutare sau modifică filtrele.")}
                       </p>
-                      <button onClick={() => setFilters(initialFilters)}>
+                      <button
+                        onClick={() => {
+                          setFilters(initialFilters);
+                          setGroup("all");
+                          setSubcategory(null);
+                        }}
+                      >
                         {t("Explorează toate locurile")}
                         <ArrowRight size={16} />
                       </button>
@@ -530,66 +537,73 @@ export function Explorer({
             className="map-region"
             aria-label={t("Explorează locațiile pe hartă")}
           >
-            {(f.categoryFilter || f.advancedFilters) && (
+            {f.categoryFilter && (
               <div className="category-bar">
-                {f.categoryFilter ? (
-                  <div className="category-scroll">
-                    {[
-                      {
-                        id: "experience",
-                        label: "Experiențe",
-                        labelEn: "Experiences",
-                      },
-                      { id: "stay", label: "Cazări", labelEn: "Stays" },
-                    ].map((c) => {
-                      const Icon = categoryIcons[c.id] ?? Compass;
-                      return (
-                        <button
-                          key={c.id}
-                          className={`category-chip ${group === c.id ? "active" : ""}`}
-                          aria-pressed={group === c.id}
-                          onClick={() => {
-                            setGroup(
-                              group === c.id
-                                ? "all"
-                                : (c.id as "experience" | "stay"),
-                            );
-                            changeCategory("all");
-                          }}
-                        >
-                          {"icon" in c && c.icon ? (
-                            <img
-                              src={String(c.icon)}
-                              alt=""
-                              width={17}
-                              height={17}
-                              style={{ objectFit: "contain" }}
-                            />
-                          ) : (
-                            <Icon size={17} />
-                          )}
-                          <span>
-                            {locale === "en" && c.labelEn
-                              ? c.labelEn
-                              : t(c.label)}
-                          </span>
-                        </button>
-                      );
-                    })}
-                  </div>
-                ) : (
-                  <span className="category-scroll" />
-                )}
-                {f.advancedFilters && (
-                  <button
-                    aria-label={t("Filtre")}
-                    className={`filter-button ${activeFilters ? "has-filters" : ""}`}
-                    onClick={() => setFilterOpen(true)}
+                <div className="category-scroll">
+                  {[
+                    {
+                      id: "experience",
+                      label: "Experiențe",
+                      labelEn: "Experiences",
+                    },
+                    { id: "stay", label: "Cazări", labelEn: "Stays" },
+                  ].map((c) => {
+                    const Icon = categoryIcons[c.id] ?? Compass;
+                    return (
+                      <button
+                        key={c.id}
+                        className={`category-chip ${group === c.id ? "active" : ""}`}
+                        aria-pressed={group === c.id}
+                        aria-expanded={
+                          c.id === "experience"
+                            ? group === "experience"
+                            : undefined
+                        }
+                        aria-controls={
+                          c.id === "experience"
+                            ? "experience-subcategories"
+                            : undefined
+                        }
+                        onClick={() => {
+                          setGroup(
+                            group === c.id ? "all" : (c.id as ExploreGroup),
+                          );
+                          setSubcategory(null);
+                          changeCategory("all");
+                        }}
+                      >
+                        <Icon size={17} />
+                        <span>{locale === "en" ? c.labelEn : c.label}</span>
+                        {c.id === "experience" && <ChevronDown size={14} />}
+                      </button>
+                    );
+                  })}
+                </div>
+                {group === "experience" && (
+                  <div
+                    id="experience-subcategories"
+                    className="subcategory-scroll"
+                    role="group"
+                    aria-label={
+                      locale === "en"
+                        ? "Experience subcategories"
+                        : "Subcategorii de experiențe"
+                    }
                   >
-                    <SlidersHorizontal size={17} />
-                    <span>{t("Filtre")}</span>
-                    {activeFilters > 0 && <i>{activeFilters}</i>}
-                  </button>
+                    {experienceSubcategories.map((c) => (
+                      <button
+                        key={c.id}
+                        className={`category-chip ${subcategory === c.id ? "active" : ""}`}
+                        aria-pressed={subcategory === c.id}
+                        onClick={() => {
+                          setSubcategory(subcategory === c.id ? null : c.id);
+                          setSelectedId(null);
+                        }}
+                      >
+                        {locale === "en" ? c.labelEn : c.label}
+                      </button>
+                    ))}
+                  </div>
                 )}
               </div>
             )}
@@ -743,131 +757,6 @@ export function Explorer({
             )
           )}
         </nav>
-      )}
-      {filterOpen && (
-        <div className="modal-backdrop" onClick={() => setFilterOpen(false)}>
-          <section
-            className="filter-modal"
-            role="dialog"
-            aria-modal="true"
-            aria-label={t("Filtrează locațiile")}
-            onClick={(e) => e.stopPropagation()}
-          >
-            <div className="modal-title">
-              <div>
-                <span className="eyebrow">{t("PE GUSTUL TĂU")}</span>
-                <h2>{t("O escapadă, așa cum vrei.")}</h2>
-              </div>
-              <button
-                aria-label={t("Închide filtrele")}
-                onClick={() => setFilterOpen(false)}
-              >
-                <X size={22} />
-              </button>
-            </div>
-            <label className="filter-field">
-              {locale === "en" ? "Subcategory" : "Subcategoria"}
-              <select
-                value={filters.category}
-                onChange={(e) => changeCategory(e.target.value)}
-              >
-                {categories
-                  .filter(
-                    (c) =>
-                      c.id === "all" ||
-                      places.some(
-                        (p) =>
-                          p.category === c.id && matchesExploreGroup(p, group),
-                      ),
-                  )
-                  .map((c) => (
-                    <option key={c.id} value={c.id}>
-                      {locale === "en" ? (c.labelEn ?? c.label) : c.label}
-                    </option>
-                  ))}
-              </select>
-            </label>
-            <label className="filter-field">
-              {t("Regiunea")}
-              <select
-                value={filters.region}
-                onChange={(e) =>
-                  setFilters((f) => ({ ...f, region: e.target.value }))
-                }
-              >
-                <option value="all">{t("Toată Moldova")}</option>
-                <option value="Nord">{t("Nord")}</option>
-                <option value="Centru">{t("Centru")}</option>
-                <option value="Sud">{t("Sud")}</option>
-              </select>
-            </label>
-            <div className="filter-field">
-              {t("Rating minim")}
-              <div className="rating-options">
-                {[0, 4.5, 4.8, 4.9].map((r) => (
-                  <button
-                    className={filters.minRating === r ? "active" : ""}
-                    key={r}
-                    onClick={() => setFilters((f) => ({ ...f, minRating: r }))}
-                  >
-                    {r === 0 ? (
-                      t("Oricare")
-                    ) : (
-                      <>
-                        <Star size={14} />
-                        {r}+
-                      </>
-                    )}
-                  </button>
-                ))}
-              </div>
-            </div>
-            {f.prices && (
-              <label className="filter-field">
-                {t("Buget maxim")}
-                <strong>{filters.maxPrice} MDL</strong>
-                <input
-                  type="range"
-                  min="0"
-                  max="2000"
-                  step="50"
-                  value={filters.maxPrice}
-                  onChange={(e) =>
-                    setFilters((f) => ({
-                      ...f,
-                      maxPrice: Number(e.target.value),
-                    }))
-                  }
-                />
-                <small>
-                  {t("Prețuri orientative per activitate sau noapte.")}
-                </small>
-              </label>
-            )}
-            <div className="filter-actions">
-              <button
-                onClick={() =>
-                  setFilters((f) => ({
-                    ...f,
-                    category: "all",
-                    region: "all",
-                    minRating: 0,
-                    maxPrice: 2000,
-                  }))
-                }
-              >
-                {t("Resetează")}
-              </button>
-              <button
-                className="primary-button"
-                onClick={() => setFilterOpen(false)}
-              >
-                {t("Arată {{count}} locuri", { count: filtered.length })}{" "}
-                <ArrowRight size={17} />
-              </button>
-            </div>
-          </section>
-        </div>
       )}
       {infoOpen && (
         <div className="modal-backdrop" onClick={() => setInfoOpen(false)}>

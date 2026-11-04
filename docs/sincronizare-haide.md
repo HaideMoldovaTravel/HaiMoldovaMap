@@ -72,3 +72,21 @@ Administrare: `/admin/haide-sync`, pentru administrator și administrator princi
 Exportul Hartă → Haide, asocierea proprietarilor, modalul de creare cont/organizație, invitația prin email, selectarea fișelor în moderare și rezolvarea conflictelor bidirecționale. Nu există încă scrieri în Haide din hartă.
 
 Asocierea cu fișe locale care existau înaintea integrării trebuie tratată în această etapă: importul este idempotent față de ID-urile Haide, dar nu unește automat o fișă de sondaj cu una Haide după nume. Replica media, maparea regională și gestionarea mai multor limbi pot fi extinse separat.
+
+## Poziționare după localitate (28 octombrie)
+
+Serviciul `haide-geocode` procesează separat fișele fără coordonate, în loturi de 30, la fiecare minut. Folosește Photon, serializează cererile la minimum 1,2 secunde și păstrează rezultatele în PostgreSQL (un an pentru potriviri, o zi pentru căutări fără rezultat). Lipsa răspunsului furnizorului nu retrage locații deja salvate. Datele trimise sunt numai adresa/localitatea publică, fără tokenul Haide sau datele contului.
+
+Căutarea este restrânsă la localități din Republica Moldova. Adresele ambigue, localitățile din afara țării și fișele fără localitate rămân pentru poziționare manuală. Dacă toate fișele aceleiași organizații indică aceeași localitate, aceasta completează localitatea lipsă din celelalte fișe. Dacă există mai multe localități, nu se ghicește.
+
+În admin, „Ajustează poziția” deschide harta cu pin mutabil și coordonate. Poziția manuală are prioritate, inclusiv după schimbarea adresei în Haide. „Revino la poziționare automată” elimină excepția. Fișele retrase din Haide nu sunt republicate de corectarea pinului.
+
+Pe hartă nu se afișează etichete de precizie. Fiecare fișă are un marcaj propriu, la orice zoom. Marcajele cu aceeași poziție sunt așezate în jurul punctului comun și legate vizual de el, pentru a putea fi selectate individual. Butonul de traseu se afișează numai pentru coordonate de la sursă, o adresă completă identificată unic sau un pin confirmat manual.
+
+Migrațiile `0005` și `0006` adaugă cache-ul și pozițiile locale. Porniți `haide-geocode` după migrare. Pentru procesare imediată: `npm run geocode:haide` în containerul aplicației. Intervalul de import Haide rămâne 30 de minute.
+
+## Contacte și subcategorii (4 noiembrie 2026)
+
+Exportul include opțional `phone`, `whatsapp` și `subcategories`. Telefonul și WhatsApp folosesc exclusiv numărul public al organizației (`public_phone`), inclusiv din snapshotul aprobat al experienței. Datele private ale proprietarului nu sunt folosite. În lipsa unui număr public, butonul WhatsApp nu este creat.
+
+Exporturile vechi rămân compatibile. Când exportul nu conține încă `phone` sau `whatsapp`, sincronizarea citește numărul public de la `v1/public/experiences/{id}`, `guesthouses/{id}` sau `accommodations/{id}`, pe aceeași bază API configurată. Verifică identitatea fișei și a organizației, fără să folosească telefoane private. Cererile publice nu transmit tokenul de sincronizare. O indisponibilitate temporară păstrează contactul confirmat anterior; o valoare publică explicită `null` îl elimină. Datele explicite din exportul nou au prioritate, inclusiv ștergerile. Astfel, activarea pe hartă nu necesită un deploy simultan al API-ului Haide.

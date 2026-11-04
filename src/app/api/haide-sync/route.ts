@@ -13,6 +13,8 @@ import {
 } from "@/server/haide/sync";
 import { pool } from "@/server/db";
 import { randomUUID } from "node:crypto";
+import { locatedItem, locationKey } from "@/modules/haide/location";
+import { importIssue } from "@/modules/haide/catalog";
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 export const maxDuration = 300;
@@ -55,6 +57,21 @@ export async function POST(request: Request) {
         z.object({ action: z.literal("sync") }).strict(),
         z
           .object({
+            action: z.literal("position"),
+            id: z.string().max(80),
+            latitude: z.number().finite().min(-90).max(90),
+            longitude: z.number().finite().min(-180).max(180),
+          })
+          .strict()
+          .refine((p) => p.latitude !== 0 || p.longitude !== 0),
+        z
+          .object({
+            action: z.literal("position-reset"),
+            id: z.string().max(80),
+          })
+          .strict(),
+        z
+          .object({
             action: z.literal("visibility"),
             id: z.string().max(80),
             suppressed: z.boolean(),
@@ -67,19 +84,46 @@ export async function POST(request: Request) {
     const client = await pool.connect();
     try {
       await client.query("BEGIN");
-      const result = await client.query(
-        "UPDATE haide_catalog SET suppressed=$2,updated_at=now() WHERE id=$1 RETURNING id",
-        [input.id, input.suppressed],
-      );
-      if (!result.rowCount) throw new HttpError(404, "Fișă inexistentă.");
+      const row = (
+        await client.query(
+          "SELECT payload,issue FROM haide_catalog WHERE id=$1 FOR UPDATE",
+          [input.id],
+        )
+      ).rows[0];
+      if (!row) throw new HttpError(404, "Fișă inexistentă.");
+      if (input.action === "visibility") {
+        await client.query(
+          "UPDATE haide_catalog SET suppressed=$2,updated_at=now() WHERE id=$1",
+          [input.id, input.suppressed],
+        );
+      } else {
+        let issue = importIssue(row.payload);
+        if (input.action === "position") {
+          const position = {
+            latitude: input.latitude,
+            longitude: input.longitude,
+            precision: "manual" as const,
+            query_key: locationKey(row.payload),
+          };
+          await client.query(
+            `INSERT INTO haide_locations(id,query_key,latitude,longitude,precision) VALUES($1,$2,$3,$4,'manual')
+            ON CONFLICT(id) DO UPDATE SET query_key=excluded.query_key,latitude=excluded.latitude,longitude=excluded.longitude,precision='manual',updated_at=now()`,
+            [input.id, position.query_key, input.latitude, input.longitude],
+          );
+          issue = importIssue(locatedItem(row.payload, position));
+        } else
+          await client.query("DELETE FROM haide_locations WHERE id=$1", [
+            input.id,
+          ]);
+        if (row.issue !== "Nu mai este public pe Haide")
+          await client.query(
+            "UPDATE haide_catalog SET visible=$2,issue=$3,location_checked_at=NULL,updated_at=now() WHERE id=$1",
+            [input.id, !issue, issue],
+          );
+      }
       await client.query(
         "INSERT INTO audit_log(id,actor_id,action,resource_id) VALUES($1,$2,$3,$4)",
-        [
-          randomUUID(),
-          actor.id,
-          input.suppressed ? "haide.hide" : "haide.restore",
-          input.id,
-        ],
+        [randomUUID(), actor.id, `haide.${input.action}`, input.id],
       );
       await client.query("COMMIT");
     } catch (error) {

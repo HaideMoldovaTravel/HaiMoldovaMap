@@ -4,4 +4,7 @@ out/
 .env*
 !.env.example
 *.tsbuildinfo
+__pycache__/
 .DS_Store
+
+.local-backups/

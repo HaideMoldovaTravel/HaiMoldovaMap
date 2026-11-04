@@ -1,0 +1,197 @@
+{
+  "vtb-3": {
+    "bucket": "experience",
+    "category": "experience",
+    "reason": "Apiherb: Logistic cere rezervarea din timp a excursiei și există telefon public."
+  },
+  "vtb-11": {
+    "bucket": "experience",
+    "category": "experience",
+    "reason": "Arta Rustică: masterclass de țesut cu programare în avans; muzeul nu se propune ca fișă separată."
+  },
+  "vtb-16": {
+    "bucket": "exclude",
+    "category": null,
+    "reason": "Popas public cu scrânciob și arbore; fără gazdă, contact sau serviciu rezervabil."
+  },
+  "vtb-27": {
+    "bucket": "exclude",
+    "category": null,
+    "reason": "Ruinele băilor tătărești sunt patrimoniu arheologic, nu băi funcționale."
+  },
+  "vtb-35": {
+    "bucket": "experience",
+    "category": "experience",
+    "reason": "Mini fermă cu interacțiune cu animalele și telefon public; rezervarea trebuie confirmată."
+  },
+  "vtb-36": {
+    "bucket": "location",
+    "category": "food",
+    "reason": "Poarta Neamului oferă gastronomie, drumeții și cort în vie, cu telefon public în fișă."
+  },
+  "vtb-80": {
+    "bucket": "location",
+    "category": "food",
+    "reason": "Conacul Drăgălina funcționează ca restaurant din 2018, conform Curiozitate; există telefon."
+  },
+  "vtb-82": {
+    "bucket": "exclude",
+    "category": null,
+    "reason": "Căsuțe pentru lectură și schimb de cărți; fără cazare sau activitate rezervabilă."
+  },
+  "vtb-84": {
+    "bucket": "exclude",
+    "category": null,
+    "reason": "Stadion și spațiu de festival; fișa nu descrie serviciu turistic rezervabil."
+  },
+  "vtb-85": {
+    "bucket": "exclude",
+    "category": null,
+    "reason": "Vatra Dumeniului este prezentată ca muzeu; exclus conform criteriului cerut."
+  },
+  "vtb-89": {
+    "bucket": "location",
+    "category": "stay",
+    "reason": "Conacul Mierii oferă explicit cazare, alimentare, excursii și degustări, cu două telefoane publice."
+  },
+  "vtb-117": {
+    "bucket": "location",
+    "category": "stay",
+    "reason": "Manas Yurt Village oferă iurte tradiționale și gastronomie, cu telefon public."
+  },
+  "vtb-127": {
+    "bucket": "experience",
+    "category": "experience",
+    "reason": "Fromage: degustări și plimbare cu căruța; Logistic precizează rezervarea din timp și un telefon distinct de Contact."
+  },
+  "vtb-128": {
+    "bucket": "experience",
+    "category": "experience",
+    "reason": "Casa Olarului: experiența «Povestea unui boț de lut», cu rezervare în avans și telefon public."
+  },
+  "vtb-136": {
+    "bucket": "location",
+    "category": "nature",
+    "reason": "Grădină privată cu vizite pe bază de programare și telefon public; sezon de clarificat."
+  },
+  "vtb-147": {
+    "bucket": "location",
+    "category": "stay",
+    "reason": "Vila lui Nea Stan are serviciul «Pensiune» declarat și telefon public."
+  },
+  "vtb-154": {
+    "bucket": "exclude",
+    "category": null,
+    "reason": "Polski kościół este biserică catolică; exclus ca lăcaș de cult."
+  },
+  "vtb-159": {
+    "bucket": "review",
+    "category": "nature",
+    "reason": "Mov Herbs: câmp de lavandă cu telefon, dar fără tarif, programare sau activitate organizată descrisă."
+  },
+  "vtb-165": {
+    "bucket": "location",
+    "category": "stay",
+    "reason": "Villa Radova Căpriana declară serviciul «Cazare»."
+  },
+  "vtb-169": {
+    "bucket": "location",
+    "category": "stay",
+    "reason": "Eco-ferma Hill&Valley descrie un complex agroturistic cu cazare și activități."
+  },
+  "vtb-174": {
+    "bucket": "location",
+    "category": "food",
+    "reason": "Casa Dulce Colibași descrie meniu de prăjituri și băuturi, pentru grupuri de până la 15 persoane."
+  },
+  "vtb-175": {
+    "bucket": "experience",
+    "category": "experience",
+    "reason": "Gastronom Stoianovca: Logistic invită la rezervarea unui atelier culinar bulgăresc; există telefon."
+  },
+  "vtb-177": {
+    "bucket": "review",
+    "category": "nature",
+    "reason": "Miros de Lavandă are telefon și câmp de lavandă, dar nu sunt descrise servicii sau rezervare."
+  },
+  "vtb-179": {
+    "bucket": "location",
+    "category": "stay",
+    "reason": "Villa Aeterna oferă camping și casă de cazare, cu rezervare în avans; telefoanele din fișă diferă."
+  },
+  "vtb-191": {
+    "bucket": "exclude",
+    "category": null,
+    "reason": "La Vatra Horelor este spațiu public de popas cu foișoare; fără furnizor sau serviciu rezervabil."
+  },
+  "vtb-196": {
+    "bucket": "location",
+    "category": "food",
+    "reason": "CUIB descrie restaurant, evenimente și catering."
+  },
+  "vtb-198": {
+    "bucket": "location",
+    "category": "food",
+    "reason": "Turnul Alb descrie restaurant, piscină, foișoare și servicii de agrement."
+  },
+  "vtb-199": {
+    "bucket": "location",
+    "category": "food",
+    "reason": "Casa Sobarului este restaurant rustic și pensiune cu bucate la cuptor; există telefon."
+  },
+  "vtb-200": {
+    "bucket": "location",
+    "category": "stay",
+    "reason": "Vila Dorului este hotel și restaurant cu piscină și wellness, conform serviciilor."
+  },
+  "vtb-208": {
+    "bucket": "experience",
+    "category": "experience",
+    "reason": "Eco Ferma OVIDA: ateliere de brânză/unt și activități la fermă; excursiile se rezervă preferabil cu două săptămâni înainte."
+  },
+  "vtb-209": {
+    "bucket": "exclude",
+    "category": null,
+    "reason": "La Hâlboc este punct de belvedere în natură; fără furnizor sau activitate rezervabilă."
+  },
+  "vtb-212": {
+    "bucket": "location",
+    "category": "nature",
+    "reason": "ZooClub Bardar oferă vizite și activități cu animale; propus ca locație de agrement."
+  },
+  "vtb-214": {
+    "bucket": "location",
+    "category": "food",
+    "reason": "Oleandra Floare de colț oferă restaurant și pensiune, descrise în fișă."
+  },
+  "vtb-226": {
+    "bucket": "review",
+    "category": "experience",
+    "reason": "AIEVEA oferă ateliere cu programare și cazare, dar fișa nu publică un contact de rezervare; de completat."
+  },
+  "vtb-229": {
+    "bucket": "location",
+    "category": "food",
+    "reason": "Epoca din Piatră este restaurant în peșteră; fișa recomandă rezervarea mesei pentru grupuri și oferă telefon."
+  },
+  "vtb-230": {
+    "bucket": "location",
+    "category": "winery",
+    "reason": "Asconi este vinărie cu website public în Logistic; contactul direct și rezervarea se completează ulterior."
+  },
+  "vtb-245": {
+    "bucket": "exclude",
+    "category": null,
+    "reason": "Popas public lângă iaz, fără contact sau serviciu organizat; campingul liber nu este ofertă de cazare confirmată."
+  },
+  "vtb-246": {
+    "bucket": "exclude",
+    "category": null,
+    "reason": "Inima Moldovei este insulă naturală în Nistru; fără servicii rezervabile descrise."
+  },
+  "vtb-250": {
+    "bucket": "exclude",
+    "category": null,
+    "reason": "Centru sportiv comunitar cu terenuri cu acces liber; fără ofertă turistică rezervabilă."
+  }
+}

@@ -1,3 +1,8 @@
+import {
+  listingFormMode,
+  simpleExperienceFields,
+  validateSimpleExperience,
+} from "@/modules/catalog/simple-experience";
 import "server-only";
 import { randomUUID, randomBytes, createHash } from "node:crypto";
 import { and, desc, eq, sql } from "drizzle-orm";
@@ -80,6 +85,7 @@ const draftInput = z
     baseRevisionId: z.string().optional(),
     categoryId: z.string().min(1).max(80),
     templateId: z.string().min(1),
+    formMode: z.enum(["simple", "full"]).optional(),
     parentLocationId: z.string().max(100).nullable().optional(),
     values: z.unknown(),
   })
@@ -114,12 +120,16 @@ export async function saveDraft(actor: Actor, raw: unknown) {
             .where(eq(listings.id, input.listingId))
         )[0]
       : undefined;
+    const formMode = listingFormMode(category.kind, actor.role, input.formMode);
     const values = validateValues(
-      template.fields,
+      formMode === "simple"
+        ? simpleExperienceFields(template.fields)
+        : template.fields,
       input.values,
       false,
       existingIdentity?.demo ?? false,
     );
+    if (formMode === "simple") validateSimpleExperience(values, false);
     if (input.parentLocationId) {
       const [parent] = await tx
         .select()
@@ -227,6 +237,7 @@ export async function saveDraft(actor: Actor, raw: unknown) {
       authorId: actor.id,
       categoryId: category.id,
       templateId: template.id,
+      formMode,
       values,
       point:
         typeof values.latitude === "number" &&
@@ -276,7 +287,14 @@ export async function submitRevision(actor: Actor, revisionId: string) {
       .select()
       .from(templates)
       .where(eq(templates.id, latest.templateId));
-    validateValues(template.fields, latest.values, true, listing.demo);
+    const simple = latest.formMode === "simple";
+    validateValues(
+      simple ? simpleExperienceFields(template.fields) : template.fields,
+      latest.values,
+      true,
+      listing.demo,
+    );
+    if (simple) validateSimpleExperience(latest.values, true);
     const [category] = await tx
       .select()
       .from(categories)
@@ -357,7 +375,14 @@ export async function moderate(actor: Actor, revisionId: string, raw: unknown) {
       .from(templates)
       .where(eq(templates.id, revision.templateId));
     if (input.decision === "approve") {
-      validateValues(template.fields, revision.values, true, listing.demo);
+      const simple = revision.formMode === "simple";
+      validateValues(
+        simple ? simpleExperienceFields(template.fields) : template.fields,
+        revision.values,
+        true,
+        listing.demo,
+      );
+      if (simple) validateSimpleExperience(revision.values, true);
       const [category] = await tx
         .select()
         .from(categories)
@@ -816,6 +841,9 @@ export async function publicCatalog(): Promise<Place[]> {
         id: listing.id,
         name: String(v.name ?? ""),
         category: category.id,
+        subcategories: Array.isArray(v.experience_subcategories)
+          ? v.experience_subcategories
+          : [],
         kind: listing.kind === "experience" ? "experience" : "location",
         categoryLabel: category.name,
         categoryLabelEn: category.nameEn,
@@ -876,6 +904,7 @@ export async function publicCatalog(): Promise<Place[]> {
                 "price_unit",
                 "tags",
                 "internal_notes",
+                "experience_subcategories",
               ].includes(f.id) &&
               v[f.id] !== undefined,
           )

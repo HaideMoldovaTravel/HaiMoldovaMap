@@ -1,4 +1,5 @@
 import type { ContentField } from "./schema";
+import { experienceSubcategories } from "@/features/places/exploration";
 const field = (
   id: string,
   label: string,
@@ -165,6 +166,16 @@ export const initialCategories = [
     color: "#4d9f96",
     kind: "experience",
     extras: [
+      field(
+        "experience_subcategories",
+        "Subcategorii de experiențe",
+        "multiselect",
+        "details",
+        {
+          labelEn: "Experience subcategories",
+          options: experienceSubcategories.map((c) => c.id),
+        },
+      ),
       field("duration", "Durată în minute", "number", "details"),
       field("min_people", "Număr minim participanți", "number", "details"),
       field("max_people", "Număr maxim participanți", "number", "details"),

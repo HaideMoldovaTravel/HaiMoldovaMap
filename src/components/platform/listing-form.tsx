@@ -16,6 +16,8 @@ import {
 import type { ContentValues } from "@/modules/catalog/schema";
 import type { CategoryConfig, Item } from "./types";
 import { api } from "./api";
+import { experienceSubcategories } from "@/features/places/exploration";
+import { SimpleExperienceForm } from "./simple-experience-form";
 import { LocationPicker } from "./location-picker";
 const groups = {
   presentation: "Prezentare",
@@ -49,7 +51,30 @@ const sectionDetails = {
       "Completează informațiile practice, facilitățile și prețurile.",
   },
 };
-export function ListingForm({
+type ListingFormProps = Parameters<typeof FullListingForm>[0];
+
+export function ListingForm(props: ListingFormProps) {
+  const categoryId = props.item?.revision.categoryId ?? props.initialCategoryId;
+  const category = categoryId
+    ? props.config.find((c) => c.id === categoryId)
+    : (props.config.find((c) => c.id === "experience" && c.active) ??
+      props.config.find((c) => c.kind === "experience" && c.active));
+  if (!props.adminMode && (!props.item || category?.kind === "experience")) {
+    if (category?.kind === "experience" && category.active)
+      return <SimpleExperienceForm {...props} category={category} />;
+    return (
+      <section className="platform-panel">
+        <p>Adăugarea experiențelor nu este disponibilă momentan.</p>
+        <button className="platform-secondary" onClick={props.onClose}>
+          Înapoi
+        </button>
+      </section>
+    );
+  }
+  return <FullListingForm {...props} />;
+}
+
+function FullListingForm({
   config,
   item,
   locations,
@@ -105,6 +130,7 @@ export function ListingForm({
         "listings",
         {
           ...savedIds,
+          formMode: "full",
           categoryId,
           templateId: category.template.id,
           parentLocationId: parentLocationId || null,
@@ -459,7 +485,11 @@ export function ListingForm({
                                     )
                                   }
                                 />
-                                {o}
+                                {field.id === "experience_subcategories"
+                                  ? (experienceSubcategories.find(
+                                      (c) => c.id === o,
+                                    )?.label ?? o)
+                                  : o}
                               </label>
                             ))}
                           </div>

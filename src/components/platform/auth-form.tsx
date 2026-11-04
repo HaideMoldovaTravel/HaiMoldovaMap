@@ -2,6 +2,7 @@
 import { useState } from "react";
 import { createAuthClient } from "better-auth/react";
 import Link from "next/link";
+import Image from "next/image";
 import { ArrowLeft, Eye, EyeOff } from "lucide-react";
 const authClient = createAuthClient();
 export function AuthForm({
@@ -96,7 +97,7 @@ export function AuthForm({
         </Link>
       </div>
       <Link href="/" className="platform-brand">
-        hai<span>moldova</span>
+        <Image src="/haide-logo.svg" alt="Haide" width={174} height={54} />
       </Link>
       <p className="platform-eyebrow">LOCURI MICI. POVEȘTI MARI.</p>
       <h1>

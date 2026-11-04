@@ -10,3 +10,8 @@ artifacts
 
 hodina-project
 backup
+data/vtb/*/raw
+data/vtb/*/images
+data/vtb/*/backup
+
+.local-backups

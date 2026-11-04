@@ -22,8 +22,6 @@ import type { MapPoint, MapRoute } from "@/features/map/types";
 import { mapLayers, type MapLayerId } from "@/features/map/config";
 import { categoryColors } from "./icons";
 import { RoutePlanner } from "./route-planner";
-const CLUSTER_CELL = 56;
-const CLUSTER_MAX_ZOOM = 15;
 const markerPaths: Record<string, string> = {
   winery: '<path d="M8 3h8l-1 7a4 4 0 0 1-6 0L8 3zm4 11v7m-4 0h8M9 7h6"/>',
   stay: '<path d="M3 18V8m18 10V8M3 14h18M6 14V7h12v7M3 18v3m18-3v3"/>',
@@ -172,7 +170,10 @@ export default function TourismMap({
     let render = () => {};
     import("leaflet").then((L) => {
       if (cancelled) return;
-      const addPlace = (p: Place) => {
+      const addPlace = (
+        p: Place,
+        position: [number, number] = p.coordinates,
+      ) => {
         const selected = p.id === selectedId;
         const glyph = p.categoryIcon
           ? `<img src="${p.categoryIcon}" width="21" height="21" style="object-fit:contain" alt=""/>`
@@ -184,7 +185,7 @@ export default function TourismMap({
           iconAnchor: [21, 43],
           tooltipAnchor: [0, -42],
         });
-        L.marker(p.coordinates, {
+        L.marker(position, {
           icon,
           title: p.name,
           alt: p.name,
@@ -199,61 +200,36 @@ export default function TourismMap({
           .on("click", () => onSelect(p.id))
           .addTo(markers.current!);
       };
-      // Places closer than CLUSTER_CELL pixels merge into one numbered bubble
-      // so dense areas (central Chișinău) stay readable and clickable.
-      const addCluster = (group: Place[]) => {
-        const bounds = L.latLngBounds(group.map((p) => p.coordinates));
-        const size = group.length < 10 ? 38 : group.length < 50 ? 46 : 54;
-        const colors = [
-          ...new Set(
-            group.map(
-              (p) => p.categoryColor ?? categoryColors[p.category] ?? "#0f5a52",
-            ),
-          ),
-        ].slice(0, 4);
-        const ring =
-          colors.length > 1
-            ? `conic-gradient(${colors.map((c, i) => `${c} ${(i * 100) / colors.length}% ${((i + 1) * 100) / colors.length}%`).join(",")})`
-            : colors[0];
-        const label = t("{{count}} locuri", { count: group.length });
-        L.marker(bounds.getCenter(), {
-          icon: L.divIcon({
-            className: "tourism-marker-wrap",
-            html: `<div class="tourism-cluster" style="--size:${size}px;--ring:${ring}"><span>${group.length}</span></div>`,
-            iconSize: [size, size],
-            iconAnchor: [size / 2, size / 2],
-          }),
-          title: label,
-          alt: label,
-          keyboard: true,
-        })
-          .bindTooltip(label, { direction: "top", className: "place-tooltip" })
-          .on("click", () =>
-            current.fitBounds(bounds, {
-              padding: [70, 70],
-              maxZoom: CLUSTER_MAX_ZOOM + 1,
-            }),
-          )
-          .addTo(markers.current!);
-      };
       render = () => {
         markers.current?.clearLayers();
         if (!showPlaces) return;
-        const zoom = current.getZoom();
-        if (zoom > CLUSTER_MAX_ZOOM) return places.forEach(addPlace);
-        const cells = new Map<string, Place[]>();
-        for (const p of places) {
-          if (p.id === selectedId) {
-            addPlace(p);
-            continue;
-          }
-          const point = current.project(p.coordinates, zoom);
-          const key = `${Math.floor(point.x / CLUSTER_CELL)}:${Math.floor(point.y / CLUSTER_CELL)}`;
-          cells.set(key, [...(cells.get(key) ?? []), p]);
+        // Keep every place selectable, including records sharing one position.
+        const positions = new Map<string, Place[]>();
+        for (const place of places) {
+          const key = place.coordinates.join(",");
+          positions.set(key, [...(positions.get(key) ?? []), place]);
         }
-        for (const group of cells.values())
-          if (group.length === 1) addPlace(group[0]);
-          else addCluster(group);
+        for (const group of positions.values()) {
+          group.sort((a, b) => a.id.localeCompare(b.id));
+          group.forEach((place, index) => {
+            if (group.length === 1) return addPlace(place);
+            const center = current.latLngToLayerPoint(place.coordinates);
+            const angle = (index * Math.PI * 2) / group.length;
+            const radius = Math.max(28, group.length * 8);
+            const point = current.layerPointToLatLng(
+              L.point(
+                center.x + Math.cos(angle) * radius,
+                center.y + Math.sin(angle) * radius,
+              ),
+            );
+            L.polyline([place.coordinates, point], {
+              color: "#708c83",
+              weight: 1,
+              interactive: false,
+            }).addTo(markers.current!);
+            addPlace(place, [point.lat, point.lng]);
+          });
+        }
       };
       render();
       current.on("zoomend", render);

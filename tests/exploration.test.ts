@@ -30,3 +30,27 @@ test("Tour operators are excluded from every public exploration group", () => {
       assert.equal(matchesExploreGroup(place, group), false);
   }
 });
+
+test("Landmarks, restaurants and shops are excluded unless explicitly published as experiences", () => {
+  for (const category of [
+    "monuments",
+    "museums",
+    "food",
+    "cafes",
+    "shopping",
+    "nature",
+    "culture",
+    "bars",
+  ])
+    assert.equal(
+      matchesExploreGroup({ category, kind: "location" }, "all"),
+      false,
+    );
+  assert.equal(
+    matchesExploreGroup(
+      { category: "custom", kind: "experience" },
+      "experience",
+    ),
+    true,
+  );
+});

@@ -36,6 +36,27 @@
       "when": 1793138704368,
       "tag": "0004_magenta_manta",
       "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "7",
+      "when": 1793172745655,
+      "tag": "0005_majestic_korg",
+      "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "7",
+      "when": 1793172914326,
+      "tag": "0006_ancient_human_cannonball",
+      "breakpoints": true
+    },
+    {
+      "idx": 7,
+      "version": "7",
+      "when": 1793822171317,
+      "tag": "0007_windy_hawkeye",
+      "breakpoints": true
     }
   ]
 }

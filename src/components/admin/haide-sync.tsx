@@ -1,5 +1,13 @@
 "use client";
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
+import dynamic from "next/dynamic";
+const LocationPicker = dynamic(
+  () =>
+    import("@/components/platform/location-picker").then(
+      (m) => m.LocationPicker,
+    ),
+  { ssr: false },
+);
 export type HaideOverview = {
   enabled: boolean;
   apiUrl: string;
@@ -21,6 +29,9 @@ export type HaideOverview = {
     visible: boolean;
     suppressed: boolean;
     issue: string | null;
+    latitude: number | null;
+    longitude: number | null;
+    precision: string | null;
   }[];
 };
 const date = (s: string) =>
@@ -29,6 +40,9 @@ export function HaideSyncPanel({ initial }: { initial: HaideOverview }) {
   const [data, setData] = useState(initial),
     [busy, setBusy] = useState(false),
     [message, setMessage] = useState("");
+  const [editing, setEditing] = useState<HaideOverview["items"][number] | null>(
+    null,
+  );
   async function action(payload: object) {
     setBusy(true);
     setMessage("");
@@ -41,10 +55,12 @@ export function HaideSyncPanel({ initial }: { initial: HaideOverview }) {
       const result = await response.json();
       if (!response.ok) throw new Error(result.error);
       setMessage("Operațiunea a fost finalizată.");
+      return true;
     } catch (error) {
       setMessage(
         error instanceof Error ? error.message : "Operațiunea a eșuat.",
       );
+      return false;
     } finally {
       try {
         const response = await fetch("/api/haide-sync");
@@ -55,6 +71,28 @@ export function HaideSyncPanel({ initial }: { initial: HaideOverview }) {
   }
   return (
     <div className="ad-page">
+      {editing && (
+        <PositionDialog
+          item={editing}
+          busy={busy}
+          onClose={() => setEditing(null)}
+          onSave={async (latitude, longitude) => {
+            if (
+              await action({
+                action: "position",
+                id: editing.id,
+                latitude,
+                longitude,
+              })
+            )
+              setEditing(null);
+          }}
+          onReset={async () => {
+            if (await action({ action: "position-reset", id: editing.id }))
+              setEditing(null);
+          }}
+        />
+      )}
       <div className="ad-page-title">
         <div>
           <p>INTEGRARE HAIDE</p>
@@ -159,6 +197,13 @@ export function HaideSyncPanel({ initial }: { initial: HaideOverview }) {
                   <button
                     className="ad-button"
                     disabled={busy}
+                    onClick={() => setEditing(item)}
+                  >
+                    Ajustează poziția
+                  </button>
+                  <button
+                    className="ad-button"
+                    disabled={busy}
                     onClick={() =>
                       void action({
                         action: "visibility",
@@ -179,5 +224,105 @@ export function HaideSyncPanel({ initial }: { initial: HaideOverview }) {
         {!data.items.length && <p>Nu au fost importate fișe.</p>}
       </section>
     </div>
+  );
+}
+
+function PositionDialog({
+  item,
+  busy,
+  onClose,
+  onSave,
+  onReset,
+}: {
+  item: HaideOverview["items"][number];
+  busy: boolean;
+  onClose: () => void;
+  onSave: (lat: number, lng: number) => Promise<void>;
+  onReset: () => Promise<void>;
+}) {
+  const dialog = useRef<HTMLDialogElement>(null);
+  const [lat, setLat] = useState(item.latitude?.toString() ?? ""),
+    [lng, setLng] = useState(item.longitude?.toString() ?? "");
+  useEffect(() => {
+    dialog.current?.showModal();
+  }, []);
+  return (
+    <dialog
+      ref={dialog}
+      className="ad-dialog haide-position-dialog"
+      aria-label="Ajustează poziția"
+      onCancel={(e) => {
+        e.preventDefault();
+        if (!busy) onClose();
+      }}
+    >
+      <h2>{item.name}</h2>
+      <p>
+        Alege punctul pe hartă sau introdu coordonatele. Poziția salvată manual
+        se păstrează la sincronizare.
+      </p>
+      <LocationPicker
+        latitude={lat ? Number(lat) : undefined}
+        longitude={lng ? Number(lng) : undefined}
+        onChange={(a, b) => {
+          setLat(String(a));
+          setLng(String(b));
+        }}
+      />
+      <form
+        onSubmit={(e) => {
+          e.preventDefault();
+          void onSave(Number(lat), Number(lng));
+        }}
+      >
+        <label>
+          Latitudine
+          <input
+            type="number"
+            step="any"
+            min="-90"
+            max="90"
+            required
+            value={lat}
+            onChange={(e) => setLat(e.target.value)}
+          />
+        </label>
+        <label>
+          Longitudine
+          <input
+            type="number"
+            step="any"
+            min="-180"
+            max="180"
+            required
+            value={lng}
+            onChange={(e) => setLng(e.target.value)}
+          />
+        </label>
+        <div className="ad-form-actions">
+          <button
+            type="button"
+            className="ad-button"
+            disabled={busy}
+            onClick={onClose}
+          >
+            Renunță
+          </button>
+          {item.precision === "manual" && (
+            <button
+              type="button"
+              className="ad-button"
+              disabled={busy}
+              onClick={() => void onReset()}
+            >
+              Revino la poziționare automată
+            </button>
+          )}
+          <button className="ad-button ad-button-primary" disabled={busy}>
+            Salvează poziția
+          </button>
+        </div>
+      </form>
+    </dialog>
   );
 }

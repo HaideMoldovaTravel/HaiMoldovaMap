@@ -180,7 +180,7 @@ export function PlaceDetails({
         </p>
         {(features.route || features.favorites) && (
           <div className="detail-actions">
-            {features.route && (
+            {features.route && p.routeAvailable !== false && (
               <button className="primary-button" onClick={onRoute}>
                 <Navigation size={16} />
                 {t("Traseu")}

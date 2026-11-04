@@ -1,3 +1,4 @@
+import { withPublicHaideContacts } from "../../modules/haide/contacts";
 import { createHash, randomUUID } from "node:crypto";
 import { pool } from "../db";
 import {
@@ -9,6 +10,13 @@ import {
   type HaideItem,
 } from "../../modules/haide/catalog";
 import type { Place } from "../../features/places/types";
+
+import {
+  withOrganizationCities,
+  locatedItem,
+  isCityLocation,
+  type Located,
+} from "../../modules/haide/location";
 
 export class HaideSyncBusy extends Error {}
 export function haideConfig() {
@@ -43,7 +51,10 @@ export function haideConfig() {
 
 async function getPage(url: URL, token: string): Promise<unknown> {
   const response = await fetch(url, {
-    headers: { Authorization: `Bearer ${token}`, Accept: "application/json" },
+    headers: {
+      ...(token ? { Authorization: `Bearer ${token}` } : {}),
+      Accept: "application/json",
+    },
     signal: AbortSignal.timeout(30000),
     redirect: "error",
     cache: "no-store",
@@ -99,11 +110,24 @@ export async function syncHaide(
       "INSERT INTO haide_sync_runs(id,source,status,trigger,actor_id) VALUES($1,$2,'running',$3,$4)",
       [runId, source, trigger, actorId],
     );
-    const items = await fetchHaideSnapshot(
+    const exportedItems = await fetchHaideSnapshot(
       config.apiUrl,
       config.token,
       config.siteUrl,
       getPage,
+    );
+    const previousContacts = new Map<string, HaideItem>(
+      (await client.query("SELECT id,payload FROM haide_catalog")).rows.map(
+        (row) => [row.id, row.payload],
+      ),
+    );
+    const items = withOrganizationCities(
+      await withPublicHaideContacts(
+        exportedItems,
+        config.apiUrl,
+        previousContacts,
+        (url) => getPage(url, ""),
+      ),
     );
     await client.query("BEGIN");
     const { rows: categories } = await client.query(
@@ -119,7 +143,16 @@ export async function syncHaide(
         throw new Error(
           `Configurează categoria locală pentru ${item.type}: ${category}`,
         );
-      const issue = importIssue(item);
+      await client.query(
+        "SELECT id FROM haide_catalog WHERE id=$1 FOR UPDATE",
+        [sourceKey(item)],
+      );
+      const location = (
+        await client.query("SELECT * FROM haide_locations WHERE id=$1", [
+          sourceKey(item),
+        ])
+      ).rows[0] as Located | undefined;
+      const issue = importIssue(locatedItem(item, location));
       if (issue) issues++;
       const payload = JSON.stringify(item);
       const hash = createHash("sha256").update(payload).digest("hex");
@@ -172,10 +205,12 @@ export async function syncHaide(
 
 export async function importedHaidePlaces(): Promise<Place[]> {
   const { rows } =
-    await pool.query(`SELECT h.payload,h.category_id,c.name,c.name_en,c.color FROM haide_catalog h
+    await pool.query(`SELECT h.payload,h.category_id,c.name,c.name_en,c.color,to_jsonb(l) AS location FROM haide_catalog h LEFT JOIN haide_locations l ON l.id=h.id
     JOIN categories c ON c.id=h.category_id WHERE h.visible=true AND h.suppressed=false AND c.active=true ORDER BY h.id`);
   return rows.flatMap((row) => {
-    const place = haidePlace(row.payload as HaideItem, row.category_id);
+    const item = row.payload as HaideItem;
+    const place = haidePlace(locatedItem(item, row.location), row.category_id);
+    if (place) place.routeAvailable = !isCityLocation(item, row.location);
     return place
       ? [
           {
@@ -198,8 +233,9 @@ export async function haideSyncOverview() {
     pool.query(
       `SELECT h.id,h.payload->>'name' AS name,h.payload->>'url' AS url,
         (h.visible AND c.active) AS visible,h.suppressed,
+        l.latitude,l.longitude,l.precision,
         CASE WHEN NOT c.active THEN 'Categoria locală este arhivată' ELSE h.issue END AS issue,h.updated_at
-        FROM haide_catalog h JOIN categories c ON c.id=h.category_id ORDER BY h.issue NULLS LAST,h.id LIMIT 500`,
+        FROM haide_catalog h JOIN categories c ON c.id=h.category_id LEFT JOIN haide_locations l ON l.id=h.id ORDER BY h.issue NULLS LAST,h.id LIMIT 500`,
     ),
   ]);
   return {

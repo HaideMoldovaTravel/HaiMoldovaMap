@@ -3,8 +3,10 @@ export interface Place {
   id: string;
   source?: "haide";
   sourceId?: string;
+  routeAvailable?: boolean;
   name: string;
   category: Exclude<CategoryId, "all">;
+  subcategories?: string[];
   kind?: "location" | "experience";
   region: string;
   village: string;

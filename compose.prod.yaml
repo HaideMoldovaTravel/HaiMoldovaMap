@@ -75,6 +75,13 @@ services:
       initialize:
         condition: service_completed_successfully
     restart: unless-stopped
+  haide-geocode:
+    <<: *app
+    command: npm run geocode:haide:watch
+    depends_on:
+      initialize:
+        condition: service_completed_successfully
+    restart: unless-stopped
   haide-sync:
     <<: *app
     command: npm run sync:haide:watch

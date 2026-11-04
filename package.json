@@ -14,6 +14,9 @@
     "db:migrate": "tsx --env-file-if-exists=.env scripts/migrate.ts",
     "db:seed": "tsx --env-file-if-exists=.env scripts/seed.ts",
     "import:places": "tsx --env-file-if-exists=.env scripts/import-places.ts",
+    "extract:vtb": "python3 scripts/vtb/extract.py",
+    "test:vtb": "python3 -m unittest discover -s tests -p 'test_vtb.py'",
+    "import:vtb": "tsx --env-file-if-exists=.env scripts/vtb-import.ts",
     "storage:init": "tsx --env-file-if-exists=.env scripts/storage-init.ts",
     "worker": "tsx --env-file-if-exists=.env scripts/worker.ts",
     "setup": "node scripts/setup.mjs",
@@ -21,7 +24,9 @@
     "docker:down": "docker compose down",
     "test:integration": "tsx --env-file=.env scripts/integration-test.ts",
     "sync:haide": "tsx --env-file-if-exists=.env scripts/haide-sync.ts",
-    "sync:haide:watch": "tsx --env-file-if-exists=.env scripts/haide-sync.ts --watch"
+    "sync:haide:watch": "tsx --env-file-if-exists=.env scripts/haide-sync.ts --watch",
+    "geocode:haide": "tsx --env-file-if-exists=.env scripts/haide-geocode.ts",
+    "geocode:haide:watch": "tsx --env-file-if-exists=.env scripts/haide-geocode.ts --watch"
   },
   "dependencies": {
     "@aws-sdk/client-s3": "^3.1152.0",

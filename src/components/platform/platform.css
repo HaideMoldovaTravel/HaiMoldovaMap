@@ -1177,3 +1177,19 @@
   border-color: #edd1c3;
   color: #934936;
 }
+
+.platform-auth .platform-brand img {
+  display: block;
+  width: 174px;
+  max-width: 100%;
+  height: auto;
+}
+
+.simple-experience-form { max-width: 780px; margin-inline: auto; }
+.simple-experience-form > p { color: #64766d; margin: 12px 0 24px; }
+.simple-experience-form fieldset { border: 0; padding: 0; min-width: 0; }
+.simple-experience-section { padding: 20px 0; border-top: 1px solid #e4ebe6; }
+.simple-experience-section h3 { display: flex; align-items: center; gap: 10px; margin-bottom: 16px; font-size: 17px; }
+.simple-experience-section h3 > span { display: grid; place-items: center; width: 28px; height: 28px; border-radius: 50%; background: #edf4ee; color: #245b48; font-size: 13px; }
+.simple-experience-section small { display: block; margin-top: 8px; color: #64766d; }
+.simple-photo-upload { padding: 20px; border: 1px dashed #9bad9f; border-radius: 12px; }

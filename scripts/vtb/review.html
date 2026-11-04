@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="ro">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>VTB · Lista pentru validare</title>
+<style>
+:root{font-family:system-ui,sans-serif;color:#183b32;background:#f4f6f0;line-height:1.5}*{box-sizing:border-box}body{margin:0}header,main{max-width:1300px;margin:auto;padding:28px}header{padding-bottom:12px}h1{font-size:clamp(27px,4vw,42px);line-height:1.15;margin:14px 0}h2{font-size:21px;margin:4px 0 12px}p{max-width:950px}.eyebrow{font-size:12px;letter-spacing:.13em;text-transform:uppercase;color:#597164}.notice{background:#e6edde;border-left:4px solid #527448;padding:14px 18px;border-radius:5px}.stats{display:flex;flex-wrap:wrap;gap:10px;margin:22px 0}.stat{background:white;border:1px solid #dce2d6;border-radius:12px;padding:14px 18px;min-width:145px}.stat b{font-size:27px;display:block}.toolbar{position:sticky;top:0;z-index:2;background:#f4f6f0f5;padding:14px 0;border-bottom:1px solid #dce2d6;display:flex;gap:8px;flex-wrap:wrap}input,select,button{font:inherit;border-radius:7px;border:1px solid #c5d1c4;padding:9px 11px;color:inherit;background:white}button{cursor:pointer}button.primary{background:#24583d;color:white;border-color:#24583d}#search{flex:1;min-width:200px}.card{background:white;border:1px solid #dce2d6;border-radius:15px;margin:20px 0;overflow:hidden}.card-top{display:grid;grid-template-columns:245px 1fr}.photo{width:100%;height:240px;object-fit:cover;background:#e8eee5}.no-photo{display:flex;align-items:center;justify-content:center;height:240px;background:#e8eee5}.body{padding:22px}.muted{color:#617368;font-size:14px}.badge{display:inline-block;font-size:12px;padding:4px 9px;border-radius:20px;background:#e4eee5;margin:0 6px 6px 0}.badge.exclude{background:#efe8e3}.badge.review{background:#fff0ca}.badge.experience{background:#dcefee}.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}.actions input{flex:1;min-width:220px}details{border-top:1px solid #e4e8df;padding:16px 22px}summary{cursor:pointer;font-weight:600}.gallery{display:flex;gap:10px;flex-wrap:wrap;margin:14px 0}.gallery img{height:135px;max-width:240px;object-fit:cover;border-radius:7px}dl{display:grid;grid-template-columns:210px 1fr;gap:8px 16px;font-size:14px}dt{font-weight:600}dd{margin:0;overflow-wrap:anywhere;white-space:pre-wrap}a{color:#236446}.issues{color:#7b5923;font-size:14px}.saved{font-size:13px;color:#526d58}#empty{padding:35px;text-align:center}.footer{padding:20px 0 50px}.file-input{display:none}@media(max-width:650px){header,main{padding:18px}.card-top{grid-template-columns:1fr}.photo{height:210px}dl{grid-template-columns:1fr}dd{margin-bottom:10px}.toolbar{position:static}}
+</style>
+<header>
+<div class="eyebrow">Village Travel Bot · inventar editorial · __SNAPSHOT_DATE__</div>
+<h1>Ce adăugăm pe hartă?</h1>
+<p>Toate fișele extrase, cu fotografii și recomandări de selecție. Verifică locațiile și experiențele propuse, apoi exportă deciziile pentru importul ulterior.</p>
+<div class="notice"><b>Doar pe hartă.</b> Nimic nu se importă din această pagină și nimic nu se trimite în Haide. Toate deciziile pornesc de la „În așteptare”. O activitate menționată nu este o rezervare confirmată.</div>
+<div class="stats" id="stats"></div>
+<div class="muted" id="coverage"></div>
+</header>
+<main>
+<div class="toolbar">
+<input id="search" aria-label="Caută" placeholder="Caută nume, localitate, activitate…">
+<select id="bucket" aria-label="Recomandare"><option value="proposed">Propuse pentru hartă</option><option value="all">Toate fișele</option><option value="location">Locații propuse</option><option value="experience">Experiențe propuse</option><option value="review">De verificat</option><option value="exclude">Excluderi propuse</option></select>
+<select id="decision" aria-label="Decizie"><option value="all">Toate deciziile</option><option value="pending">În așteptare</option><option value="approve_location">Aprobate ca locații</option><option value="approve_experience">Aprobate ca experiențe</option><option value="reject">Respinse</option><option value="verify">De clarificat</option></select>
+<button class="primary" id="export">Exportă deciziile</button>
+<button id="import">Încarcă deciziile</button><input type="file" accept="application/json,.json" id="import-file" class="file-input">
+</div>
+<p class="saved" id="status"></p><div id="cards"></div><p id="empty" hidden>Nu există fișe pentru filtrele alese.</p>
+<div class="footer muted">Datele originale sunt păstrate în catalog.json. Fotografiile sunt copii locale ale imaginilor publicate la sursă. Drepturile de republicare a textelor și imaginilor se verifică înaintea publicării. Recomandările se bazează pe fișele sursei; furnizorii nu au fost contactați.</div>
+</main>
+<script type="application/json" id="catalog">__CATALOG_DATA__</script>
+<script>
+const catalog=JSON.parse(document.getElementById('catalog').textContent);
+const labels={location:'Locație propusă',experience:'Experiență propusă',review:'De verificat',exclude:'Excludere propusă'};
+const booking={explicit_request:'Sursa menționează rezervare / programare; de confirmat cu gazda',mentioned_no_contact:'Rezervarea este menționată, dar contactul lipsește',contact_only:'Contact disponibil; rezervarea nu este confirmată',unverified:'Fără informație verificabilă despre rezervare'};
+const decisions={pending:'În așteptare',approve_location:'Aprobă ca locație',approve_experience:'Aprobă ca experiență',reject:'Respinge',verify:'De clarificat'};
+const storageKey='vtb-review-'+catalog.snapshot_sha256;
+let state={},persisted=true;
+try{state=JSON.parse(localStorage.getItem(storageKey)||'{}')}catch{persisted=false}
+const $=id=>document.getElementById(id);
+const esc=value=>String(value??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const norm=value=>String(value).normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase();
+function save(){try{localStorage.setItem(storageKey,JSON.stringify(state))}catch{persisted=false}updateStatus()}
+function updateStatus(){const edited=Object.values(state).filter(s=>s.decision&&s.decision!=='pending').length;$('status').textContent=`${edited} / ${catalog.records.length} fișe cu decizie. ${persisted?'Deciziile se păstrează în acest browser.':'Salvarea în browser nu este disponibilă.'} Exportă fișierul cu deciziile pentru a-l transmite mai departe.`}
+function imagePath(img){return img.local_path||null}
+function render(){
+ const query=norm($('search').value),bucket=$('bucket').value,decision=$('decision').value;
+ const rows=catalog.records.filter(r=>{const b=r.recommendation.bucket;return (bucket==='all'||(bucket==='proposed'?['location','experience'].includes(b):b===bucket))&&(decision==='all'||(state[r.id]?.decision||'pending')===decision)&&(!query||norm([r.name,r.locality,r.district,r.description,...r.activities].join(' ')).includes(query))});
+ $('empty').hidden=rows.length>0;
+ $('cards').innerHTML=rows.map(r=>{
+  const rec=r.recommendation,s=state[r.id]||{},image=r.images.find(i=>imagePath(i)),photo=image?`<a href="${esc(imagePath(image))}" target="_blank"><img class="photo" loading="lazy" src="${esc(imagePath(image))}" alt="${esc(r.name)}"></a>`:'<div class="no-photo">Fără fotografie locală</div>';
+  const candidates=rec.experience_candidates.map(a=>`${a.name} (${a.evidence_level==='description'?'descriere / servicii':'doar etichetă; neconfirmat'})`).join(' · ');
+  const details={...r.fields,'Categorii VTB':r.categories.join(' · '),'Activități VTB':r.activities.join(' · ')};
+  const coords=r.coordinates?`${r.coordinates.latitude}, ${r.coordinates.longitude}`:'Coordonate lipsă';
+  return `<article class="card" data-id="${esc(r.id)}"><div class="card-top">${photo}<div class="body"><span class="badge ${esc(rec.bucket)}">${labels[rec.bucket]}</span><span class="muted">${esc(r.id)}</span><h2>${esc(r.name)}</h2><div class="muted">${esc(r.locality)} · ${esc(r.district)} · ${esc(coords)}</div><p>${esc(r.description)}</p><p class="muted">${esc(rec.reason)}</p><p><b>Rezervare:</b> ${esc(booking[rec.booking_status])}</p><div>${r.contact_text?'<b>Contact:</b> '+esc(r.contact_text):'Fără contact public'}</div><p><a href="${esc(r.source_url)}" target="_blank" rel="noopener noreferrer">Vezi fișa sursă ↗</a></p><div class="actions"><select data-action="decision" aria-label="Decizie pentru ${esc(r.name)}">${Object.entries(decisions).map(([v,l])=>`<option value="${v}" ${(s.decision||'pending')===v?'selected':''}>${l}</option>`).join('')}</select><input data-action="notes" aria-label="Observații pentru ${esc(r.name)}" placeholder="Observațiile tale…" value="${esc(s.notes||'')}"></div></div></div><details><summary>Date complete, activități și ${r.images.length} fotografii</summary><p><b>Activități propuse:</b> ${esc(candidates||'Nu sunt identificate oferte.')}</p><ul class="issues">${rec.issues.map(i=>`<li>${esc(i)}</li>`).join('')}${r.possible_duplicates?`<li>Posibil duplicat: ${esc(r.possible_duplicates.join(', '))}</li>`:''}</ul><p class="muted">Aprobat de sursă: ${r.source_flags.approved?'da':'nu / necunoscut'} · Disponibil la sursă: ${r.source_flags.available?'da':'nu / necunoscut'} · Afacere bifată la sursă: ${r.source_flags.business?'da':'nu / necunoscut'}</p><div class="gallery">${r.images.map(i=>imagePath(i)?`<a href="${esc(imagePath(i))}" target="_blank"><img loading="lazy" src="${esc(imagePath(i))}" alt="${esc(i.alt)}"></a>`:`<span>Fotografie nedescărcată: <a href="${esc(i.url)}" target="_blank" rel="noopener noreferrer">sursa</a></span>`).join('')}</div><dl>${Object.entries(details).map(([k,v])=>`<dt>${esc(k)}</dt><dd>${esc(v||'—')}</dd>`).join('')}</dl></details></article>`;
+ }).join('');
+ updateStatus();$('status').textContent=`Se afișează ${rows.length} fișe. `+$('status').textContent;
+}
+$('stats').innerHTML=[['Total extrase',catalog.records.length],...Object.entries(labels).map(([k,v])=>[v,catalog.summary.by_recommendation[k]||0])].map(([l,v])=>`<div class="stat"><b>${v}</b>${l}</div>`).join('');
+$('coverage').textContent=`${catalog.summary.with_coordinates} fișe cu coordonate · ${catalog.summary.with_contact} cu contacte · ${catalog.summary.image_references} fotografii în inventar · ${catalog.summary.image_errors} erori de imagine`;
+for(const id of ['search','bucket','decision'])$(id).addEventListener(id==='search'?'input':'change',render);
+$('cards').addEventListener('change',event=>{const el=event.target;if(!el.dataset.action)return;const id=el.closest('[data-id]').dataset.id;state[id]={decision:state[id]?.decision||'pending',notes:state[id]?.notes||'',[el.dataset.action]:el.value};save()});
+$('cards').addEventListener('input',event=>{const el=event.target;if(el.dataset.action!=='notes')return;const id=el.closest('[data-id]').dataset.id;state[id]={decision:state[id]?.decision||'pending',notes:el.value};save()});
+$('export').onclick=()=>{const result={schema_version:1,snapshot_sha256:catalog.snapshot_sha256,source:catalog.source,extracted_at:catalog.extracted_at,reviewed_at:new Date().toISOString(),publication_scope:'map_only',sync_to_haide:false,decisions:catalog.records.map(r=>({id:r.id,name:r.name,source_url:r.source_url,decision:state[r.id]?.decision||'pending',notes:state[r.id]?.notes||''}))};const blob=new Blob([JSON.stringify(result,null,2)+'\n'],{type:'application/json'});const link=document.createElement('a');link.href=URL.createObjectURL(blob);link.download='vtb-decizii.json';link.click();setTimeout(()=>URL.revokeObjectURL(link.href),1000)};
+$('import').onclick=()=>$('import-file').click();
+$('import-file').onchange=async event=>{try{const file=event.target.files[0];if(!file)return;const result=JSON.parse(await file.text());if(result.snapshot_sha256!==catalog.snapshot_sha256||!Array.isArray(result.decisions))throw Error('Fișierul aparține altei extrageri.');const ids=new Set(catalog.records.map(r=>r.id)),next={},seen=new Set();for(const row of result.decisions){if(!ids.has(row.id)||seen.has(row.id)||!Object.hasOwn(decisions,row.decision)||typeof row.notes!=='string')throw Error('Decizie invalidă.');seen.add(row.id);next[row.id]={decision:row.decision,notes:row.notes}}if(seen.size!==ids.size)throw Error('Fișierul nu conține toate fișele.');state=next;save();render()}catch(error){alert('Nu s-au încărcat deciziile: '+error.message)}finally{event.target.value=''}};
+render();
+</script>
+</html>

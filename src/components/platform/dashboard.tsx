@@ -50,6 +50,10 @@ export function Dashboard({
   }
   async function openForm(item: Item | "new") {
     setMessage("");
+    if (!admin && (item === "new" || item.listing.kind === "experience")) {
+      setEditing(item);
+      return;
+    }
     try {
       const places =
         await api<{ id: string; name: string; category: string }[]>("public");
@@ -121,7 +125,7 @@ export function Dashboard({
             className="platform-primary"
             onClick={() => void openForm("new")}
           >
-            + Adaugă locație / experiență
+            {admin ? "+ Adaugă locație / experiență" : "+ Adaugă experiență"}
           </button>
         </div>
         {message && (
@@ -132,6 +136,7 @@ export function Dashboard({
         {editing ? (
           <ListingForm
             config={data.config}
+            adminMode={admin}
             item={editing === "new" ? undefined : editing}
             locations={publicLocations}
             onClose={() => setEditing(null)}

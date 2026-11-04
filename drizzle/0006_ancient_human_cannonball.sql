@@ -1,0 +1,1 @@
+ALTER TABLE "haide_catalog" ADD COLUMN "location_checked_at" timestamp with time zone;

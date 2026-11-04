@@ -45,7 +45,21 @@ test(
     ];
     let fail = false,
       incomplete = false;
-    globalThis.fetch = async () => {
+    globalThis.fetch = async (request) => {
+      if (String(request).includes("photon.komoot.io"))
+        return Response.json({
+          features: [
+            {
+              properties: {
+                name: "Orhei",
+                countrycode: "MD",
+                osm_key: "place",
+                osm_value: "city",
+              },
+              geometry: { coordinates: [28.82, 47.38] },
+            },
+          ],
+        });
       if (fail) throw new Error("Offline");
       return Response.json({
         version: 1,
@@ -57,7 +71,9 @@ test(
       });
     };
     try {
-      await pool.query("TRUNCATE haide_catalog,haide_sync_runs");
+      await pool.query(
+        "TRUNCATE haide_locations,haide_geocode_cache,haide_catalog,haide_sync_runs",
+      );
       for (const [id, kind] of [
         ["haide-test-exp", "experience"],
         ["haide-test-loc", "location"],
@@ -100,6 +116,22 @@ test(
         (await pool.query("SELECT issue FROM haide_catalog")).rows[0].issue,
         "Lipsesc coordonatele",
       );
+      const { resolveHaideLocations } =
+        await import("../src/server/haide/geocode");
+      assert.equal((await resolveHaideLocations()).resolved, 1);
+      assert.equal((await importedHaidePlaces())[0].routeAvailable, false);
+      await syncHaide();
+      assert.equal(
+        (await importedHaidePlaces()).length,
+        1,
+        "Geocoded positions survive sync",
+      );
+      await pool.query(
+        "UPDATE haide_locations SET precision='manual',latitude=47.4",
+      );
+      await syncHaide();
+      assert.equal((await importedHaidePlaces())[0].coordinates[0], 47.4);
+      assert.equal((await importedHaidePlaces())[0].routeAvailable, true);
       items[0].latitude = 47.38;
       await syncHaide();
       assert.equal((await importedHaidePlaces()).length, 1);

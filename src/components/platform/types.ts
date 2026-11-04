@@ -32,6 +32,7 @@ export type Item = {
     listingId: string;
     categoryId: string;
     templateId: string;
+    formMode?: "simple" | "full";
     values: ContentValues;
     status: string;
     feedback: string | null;

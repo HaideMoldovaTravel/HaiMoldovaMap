@@ -8,7 +8,9 @@ export function LocationPicker({
   latitude,
   longitude,
   onChange,
+  compact = false,
 }: {
+  compact?: boolean;
   latitude?: number;
   longitude?: number;
   onChange: (lat: number, lng: number, address?: string) => void;
@@ -152,7 +154,9 @@ export function LocationPicker({
         aria-label="Alege poziția locației"
       />
       <small>
-        Poți introduce sau corecta și coordonatele în câmpurile de mai jos.
+        {compact
+          ? "Poziția se salvează automat când alegi un punct pe hartă."
+          : "Poți introduce sau corecta și coordonatele în câmpurile de mai jos."}
       </small>
     </div>
   );
