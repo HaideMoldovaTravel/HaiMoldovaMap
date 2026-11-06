@@ -35,6 +35,7 @@ import {
 } from "@/features/places/exploration";
 import type { CategoryId, Place, PlaceFilters } from "@/features/places/types";
 import { categoryIcons, ArrowUpRightIcon } from "./icons";
+import { MetaPixel } from "./meta-pixel";
 import { PlaceCard } from "./place-card";
 import { PlaceDetails } from "./place-details";
 import { GeoSearchResults } from "./search-results";
@@ -307,6 +308,7 @@ export function Explorer({
               />
             </div>
             <div className="header-right">
+              {!embedded && <MetaPixel />}
               {f.contribute && (
                 <a
                   className="contribute-link"

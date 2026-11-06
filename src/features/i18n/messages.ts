@@ -1,5 +1,15 @@
 export type Locale = "ro" | "en" | "ru";
 export const messages: Record<string, { en: string; ru: string }> = {
+  "Preferințe de marketing": {
+    en: "Marketing preferences",
+    ru: "Настройки маркетинга",
+  },
+  "Cu acordul tău, folosim Meta Pixel pentru a măsura eficiența reclamelor și clickurile pe rezervare, WhatsApp și telefon.": {
+    en: "With your consent, we use Meta Pixel to measure ad performance and clicks on booking, WhatsApp, and phone links.",
+    ru: "С вашего согласия мы используем Meta Pixel для оценки эффективности рекламы и переходов по ссылкам бронирования, WhatsApp и телефона.",
+  },
+  Refuză: { en: "Decline", ru: "Отклонить" },
+  Acceptă: { en: "Accept", ru: "Принять" },
   "Vezi pe Haide": { en: "View on Haide", ru: "Посмотреть на Haide" },
   "Hai Moldova — Descoperă locuri, trăiește povești": {
     en: "Hai Moldova — Discover places, live stories",
