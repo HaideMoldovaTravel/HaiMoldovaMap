@@ -135,6 +135,9 @@ export const places: Place[] = [
   },
   {
     id: "milesti",
+    bookingMode: "private",
+    minPeople: 4,
+    maxPeople: 15,
     name: "Mileștii Mici",
     category: "winery",
     region: "Centru",
@@ -207,6 +210,9 @@ export const places: Place[] = [
   },
   {
     id: "kayak",
+    bookingMode: "group",
+    minPeople: 1,
+    maxPeople: 10,
     name: "Cu caiacul pe Nistru",
     category: "experience",
     region: "Centru",
@@ -261,8 +267,11 @@ export function filterPlaces(
   saved: string[],
 ) {
   const query = normalize(filters.query.trim());
-  return items.filter(
-    (p) =>
+  const minPrice = filters.minPrice ?? 0;
+  const priceActive = minPrice > 0 || Number.isFinite(filters.maxPrice);
+  return items.filter((p) => {
+    const price = p.priceMode === "Gratuit" ? 0 : p.price;
+    return (
       (!query ||
         normalize(
           `${p.name} ${p.village} ${p.description} ${p.tags.join(" ")}`,
@@ -270,13 +279,15 @@ export function filterPlaces(
       (filters.category === "all" || p.category === filters.category) &&
       (filters.region === "all" || p.region === filters.region) &&
       p.rating >= filters.minRating &&
-      p.price <= filters.maxPrice &&
-      (filters.maxPrice >= 2000 ||
-        p.demo !== false ||
-        ((p.priceMode === "Gratuit" ||
-          p.priceMode === "Fix" ||
-          p.priceMode === "De la") &&
-          (!p.currency || p.currency === "MDL"))) &&
-      (!filters.savedOnly || saved.includes(p.id)),
-  );
+      (!priceActive ||
+        ((!p.currency || p.currency === "MDL") &&
+          (p.priceMode === "Gratuit" ||
+            p.priceMode === "Fix" ||
+            p.priceMode === "De la" ||
+            (!p.priceMode && p.demo !== false)) &&
+          price >= minPrice &&
+          price <= filters.maxPrice)) &&
+      (!filters.savedOnly || saved.includes(p.id))
+    );
+  });
 }

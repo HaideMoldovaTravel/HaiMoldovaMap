@@ -61,6 +61,17 @@ test(
           ],
         });
       if (fail) throw new Error("Offline");
+      if (String(request).includes("/v1/public/experiences/1")) {
+        return Response.json({
+          data: {
+            id: 1,
+            guesthouse: { id: 1, public_phone: null },
+            booking_mode: "private",
+            min_guests: 3,
+            max_guests: 8,
+          },
+        });
+      }
       return Response.json({
         version: 1,
         snapshot: "f5c2d43c-44c1-44a8-80ee-ec27b9daea4c",
@@ -89,7 +100,11 @@ test(
         (await pool.query("SELECT count(*) FROM haide_catalog")).rows[0].count,
         "1",
       );
-      assert.equal((await importedHaidePlaces())[0].name, "Approved");
+      const [imported] = await importedHaidePlaces();
+      assert.equal(imported.name, "Approved");
+      assert.equal(imported.bookingMode, "private");
+      assert.equal(imported.minPeople, 3);
+      assert.equal(imported.maxPeople, 8);
       items[0].name = "New approved title";
       await syncHaide();
       assert.equal((await importedHaidePlaces())[0].name, "New approved title");

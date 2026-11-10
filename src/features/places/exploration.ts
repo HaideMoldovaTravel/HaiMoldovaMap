@@ -1,4 +1,4 @@
-import type { Place } from "./types";
+import type { BookingMode, Place } from "./types";
 
 export type ExploreGroup = "all" | "experience" | "stay";
 type Category = Pick<Place, "category" | "categoryLabel" | "kind">;
@@ -24,6 +24,50 @@ export const experienceSubcategories = [
 ] as const;
 export type ExperienceSubcategory =
   (typeof experienceSubcategories)[number]["id"];
+
+export type ExperienceFilters = {
+  subcategories: ExperienceSubcategory[];
+  bookingMode: BookingMode | "";
+  guests: number;
+};
+
+export type ExploreFacets = ExperienceFilters & {
+  minPrice?: number;
+  maxPrice?: number;
+};
+
+export const initialExperienceFilters: ExploreFacets = {
+  subcategories: [],
+  bookingMode: "",
+  guests: 0,
+};
+
+export function matchesExperienceFilters(
+  place: Place,
+  { subcategories, bookingMode, guests }: ExperienceFilters,
+) {
+  if (!subcategories.length && !bookingMode && !guests) return true;
+  if (!matchesExploreGroup(place, "experience")) return false;
+
+  const mode =
+    place.bookingMode ??
+    (place.subcategories?.includes("private-exclusive")
+      ? "private"
+      : undefined);
+  const categories = subcategories.length ? placeSubcategories(place) : [];
+
+  return (
+    (!bookingMode || mode === bookingMode) &&
+    (!subcategories.length ||
+      subcategories.some((id) => categories.includes(id))) &&
+    (!guests ||
+      (place.minPeople !== undefined &&
+        Number.isInteger(place.minPeople) &&
+        place.minPeople > 0 &&
+        guests >= place.minPeople &&
+        guests <= (place.maxPeople ?? Infinity)))
+  );
+}
 
 export function placeSubcategories(
   place: Pick<

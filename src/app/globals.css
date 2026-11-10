@@ -3650,13 +3650,128 @@ button {
 }
 .marketing-preferences-actions button:hover { background: var(--line); }
 
-/* Experience subcategories are directly below the two main choices. */
-.category-bar { flex-direction: column; align-items: flex-start; gap: 8px; pointer-events: none; }
-.category-bar > * { pointer-events: auto; max-width: 100%; }
-.category-bar .category-scroll { flex: none; }
-.subcategory-scroll { display: flex; flex-wrap: wrap; gap: 7px; max-width: 780px; }
-.subcategory-scroll .category-chip { font-size: 12px; height: 34px; }
-@media (max-width: 700px) {
-  .subcategory-scroll { flex-wrap: nowrap; overflow-x: auto; width: 100%; padding: 2px 12px 6px; scrollbar-width: none; }
-  .subcategory-scroll .category-chip { flex-shrink: 0; }
+.category-bar { pointer-events: none; }
+.category-bar > * { pointer-events: auto; }
+.filter-button { position: relative; }
+.list-filter-trigger { display: none; }
+
+.explore-filter-dialog {
+  width: min(560px, calc(100% - 32px));
+  max-height: min(720px, calc(100dvh - 32px));
+  padding: 0;
+  margin: auto;
+  color: #17332d;
+  overflow: hidden;
+}
+.explore-filter-dialog::backdrop { background: #1e342c66; }
+.explore-filter-dialog form {
+  display: flex;
+  flex-direction: column;
+  max-height: inherit;
+}
+.explore-filter-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 24px;
+  border-bottom: 1px solid var(--line);
+}
+.explore-filter-header h2 { font-size: 20px; font-weight: 700; }
+.explore-filter-header button,
+.filter-stepper button {
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  border: 1px solid var(--line);
+  border-radius: 50%;
+}
+.explore-filter-body {
+  min-height: 0;
+  overflow: auto;
+  overscroll-behavior: contain;
+  padding: 0 24px;
+}
+.explore-filter-body fieldset,
+.filter-guests {
+  min-width: 0;
+  padding: 0 0 20px;
+  margin: 20px 0 0;
+  border-bottom: 1px solid var(--line);
+}
+.explore-filter-body > :last-child { border-bottom: 0; }
+.explore-filter-body legend,
+.filter-guests h3 { font-size: 16px; font-weight: 700; }
+.filter-options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 10px;
+}
+.filter-options .category-chip {
+  height: auto;
+  min-height: 38px;
+  border-radius: 999px;
+  font-size: 13px;
+  box-shadow: none;
+}
+.filter-price-inputs {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  margin-top: 10px;
+}
+.filter-price-inputs label { font-size: 13px; }
+.filter-price-inputs input {
+  display: block;
+  width: 100%;
+  margin-top: 5px;
+  padding: 10px 12px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: white;
+  font-size: 16px;
+}
+.filter-error { margin-top: 8px; font-size: 13px; color: #a32621; }
+.filter-guests {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px 16px;
+}
+.filter-guests > div:first-child { flex: 1 1 175px; }
+.filter-guests p { margin-top: 4px; color: var(--muted); font-size: 13px; }
+.filter-stepper { display: flex; align-items: center; gap: 8px; }
+.filter-stepper output { min-width: 54px; text-align: center; font-size: 13px; }
+.explore-filter-dialog .filter-actions {
+  gap: 12px;
+  margin: 0;
+  padding: 14px 24px;
+}
+.explore-filter-dialog .filter-actions > button:first-child {
+  color: var(--green);
+  font-weight: 700;
+}
+
+@media (max-width: 760px) {
+  .list-filter-trigger { display: block; }
+  .category-bar .filter-button i,
+  .list-filter-trigger .filter-button i { position: absolute; top: -4px; right: -4px; }
+  .explore-filter-dialog {
+    position: fixed;
+    inset: auto 0 0;
+    width: 100%;
+    max-height: 88dvh;
+    margin: 0;
+    border-radius: 24px 24px 0 0;
+  }
+  .explore-filter-body fieldset,
+  .filter-guests {
+    padding-bottom: 16px;
+    margin-top: 16px;
+  }
+  .explore-filter-dialog .filter-actions {
+    padding-bottom: calc(14px + env(safe-area-inset-bottom));
+  }
 }

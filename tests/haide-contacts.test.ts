@@ -1,6 +1,6 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { withPublicHaideContacts } from "../src/modules/haide/contacts";
+import { withPublicHaideDetails } from "../src/modules/haide/contacts";
 import type { HaideItem } from "../src/modules/haide/catalog";
 const item: HaideItem = {
   type: "experience",
@@ -28,7 +28,7 @@ const detail = (phone: string | null, id = 7) => ({
   },
 });
 test("Legacy Haide exports gain only the public host contact from the correct public route", async () => {
-  const [result] = await withPublicHaideContacts(
+  const [result] = await withPublicHaideDetails(
     [item],
     api,
     new Map(),
@@ -43,17 +43,46 @@ test("Legacy Haide exports gain only the public host contact from the correct pu
   assert.equal(result.phone, "+37369123456");
   assert.equal(result.whatsapp, "+37369123456");
 });
-test("Explicit source contacts and removals do not call the compatibility endpoint", async () => {
-  const source = { ...item, phone: null, whatsapp: null };
-  const [result] = await withPublicHaideContacts(
+test("Explicit source details and removals do not call the compatibility endpoint", async () => {
+  const source = {
+    ...item,
+    phone: null,
+    whatsapp: null,
+    booking_mode: "group" as const,
+    min_guests: 1,
+    max_guests: 6,
+  };
+  let called = false;
+  const [result] = await withPublicHaideDetails(
     [source],
     api,
     new Map(),
     async () => {
+      called = true;
       throw new Error("Must not call");
     },
   );
+  assert.equal(called, false);
   assert.deepEqual(result, source);
+});
+test("Public experience details supply booking mode and guest limits without overriding contacts", async () => {
+  const [result] = await withPublicHaideDetails(
+    [{ ...item, phone: null, whatsapp: null, min_guests: 2 }],
+    api,
+    new Map(),
+    async () => ({
+      data: {
+        ...detail("+37369123456").data,
+        booking_mode: "private",
+        min_guests: 4,
+        max_guests: 12,
+      },
+    }),
+  );
+  assert.equal(result.phone, null);
+  assert.equal(result.booking_mode, "private");
+  assert.equal(result.min_guests, 2);
+  assert.equal(result.max_guests, 12);
 });
 test("An outage preserves known contacts, while an explicit public removal clears them", async () => {
   const previous = new Map([
@@ -62,7 +91,7 @@ test("An outage preserves known contacts, while an explicit public removal clear
       { ...item, phone: "+37369123456", whatsapp: "+37369123456" },
     ],
   ]);
-  const [kept] = await withPublicHaideContacts(
+  const [kept] = await withPublicHaideDetails(
     [item],
     api,
     previous,
@@ -71,7 +100,7 @@ test("An outage preserves known contacts, while an explicit public removal clear
     },
   );
   assert.equal(kept.whatsapp, "+37369123456");
-  const [removed] = await withPublicHaideContacts(
+  const [removed] = await withPublicHaideDetails(
     [item],
     api,
     previous,
@@ -84,7 +113,7 @@ test("Mismatched organizations and private-only contacts cannot create a WhatsAp
     detail("+37369123456", 8),
     { data: { id: 1, guesthouse: { id: 7, phone: "+37369123456" } } },
   ]) {
-    const [result] = await withPublicHaideContacts(
+    const [result] = await withPublicHaideDetails(
       [item],
       api,
       new Map(),

@@ -23,6 +23,7 @@ import {
 import { contactHref, formatPlacePrice } from "@/features/places/presentation";
 import { mockContacts } from "@/features/places/contacts";
 import { categories } from "@/features/places/data";
+import { matchesExploreGroup } from "@/features/places/exploration";
 import type { Place } from "@/features/places/types";
 import {
   fullFeatures,
@@ -48,6 +49,9 @@ export function PlaceDetails({
   features?: ExplorerFeatures;
 }) {
   const { t, locale } = useI18n();
+  const isExperience = p.kind
+    ? p.kind === "experience"
+    : matchesExploreGroup(p, "experience");
   const contacts: Record<string, string> =
     p.contacts ??
     (Object.fromEntries(
@@ -199,7 +203,7 @@ export function PlaceDetails({
             className={tab === "about" ? "active" : ""}
             onClick={() => setTab("about")}
           >
-            {t("Despre loc")}
+            {t(isExperience ? "Despre experiență" : "Despre locație")}
           </button>
           {hasContacts && (
             <button

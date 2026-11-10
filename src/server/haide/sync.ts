@@ -1,4 +1,4 @@
-import { withPublicHaideContacts } from "../../modules/haide/contacts";
+import { withPublicHaideDetails } from "../../modules/haide/contacts";
 import { createHash, randomUUID } from "node:crypto";
 import { pool } from "../db";
 import {
@@ -116,16 +116,16 @@ export async function syncHaide(
       config.siteUrl,
       getPage,
     );
-    const previousContacts = new Map<string, HaideItem>(
+    const previousItems = new Map<string, HaideItem>(
       (await client.query("SELECT id,payload FROM haide_catalog")).rows.map(
         (row) => [row.id, row.payload],
       ),
     );
     const items = withOrganizationCities(
-      await withPublicHaideContacts(
+      await withPublicHaideDetails(
         exportedItems,
         config.apiUrl,
-        previousContacts,
+        previousItems,
         (url) => getPage(url, ""),
       ),
     );

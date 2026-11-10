@@ -176,6 +176,10 @@ export const initialCategories = [
           options: experienceSubcategories.map((c) => c.id),
         },
       ),
+      field("booking_mode", "Tipul experienței", "select", "details", {
+        labelEn: "Experience type",
+        options: ["Grup deschis", "Grup privat"],
+      }),
       field("duration", "Durată în minute", "number", "details"),
       field("min_people", "Număr minim participanți", "number", "details"),
       field("max_people", "Număr maxim participanți", "number", "details"),

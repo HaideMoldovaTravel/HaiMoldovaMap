@@ -123,6 +123,9 @@ export const messages: Record<string, { en: string; ru: string }> = {
     en: "places",
     ru: "мест",
   },
+  experiență: { en: "experience", ru: "впечатление" },
+  experiențe: { en: "experiences", ru: "впечатлений" },
+  salvată: { en: "saved", ru: "в избранном" },
   salvate: {
     en: "saved",
     ru: "в избранном",
@@ -215,6 +218,38 @@ export const messages: Record<string, { en: string; ru: string }> = {
     en: "Filters",
     ru: "Фильтры",
   },
+  "Subcategorii de experiențe": {
+    en: "Experience subcategories",
+    ru: "Подкатегории впечатлений",
+  },
+  "Tipul experienței": { en: "Experience type", ru: "Тип впечатления" },
+  "Grup deschis": { en: "Shared group", ru: "Открытая группа" },
+  "Grup privat": { en: "Private group", ru: "Частная группа" },
+  "Interval de preț (MDL)": {
+    en: "Price range (MDL)",
+    ru: "Диапазон цен (MDL)",
+  },
+  "Preț minim": { en: "Minimum price", ru: "Минимальная цена" },
+  "Preț maxim": { en: "Maximum price", ru: "Максимальная цена" },
+  "Fără limită": { en: "No limit", ru: "Без ограничений" },
+  "Prețul maxim trebuie să fie cel puțin egal cu prețul minim.": {
+    en: "The maximum price must be at least the minimum price.",
+    ru: "Максимальная цена должна быть не ниже минимальной.",
+  },
+  "Număr de persoane": { en: "Number of guests", ru: "Количество гостей" },
+  "Alege mărimea grupului pentru a ține cont de minimul cerut de gazdă.": {
+    en: "Choose your group size to account for the host’s minimum.",
+    ru: "Выберите размер группы с учётом минимума, установленного организатором.",
+  },
+  "Scade numărul de persoane": {
+    en: "Decrease number of guests",
+    ru: "Уменьшить количество гостей",
+  },
+  "Crește numărul de persoane": {
+    en: "Increase number of guests",
+    ru: "Увеличить количество гостей",
+  },
+  "Aplică filtrele": { en: "Apply filters", ru: "Применить фильтры" },
   "Caută pe harta Moldovei": {
     en: "Search the map of Moldova",
     ru: "Поиск на карте Молдовы",
@@ -307,6 +342,7 @@ export const messages: Record<string, { en: string; ru: string }> = {
     en: "Show {{count}} places",
     ru: "Показать места: {{count}}",
   },
+  "Arată un loc": { en: "Show 1 place", ru: "Показать 1 место" },
   "Despre Hai Moldova": {
     en: "About Hai Moldova",
     ru: "О Hai Moldova",
@@ -373,10 +409,8 @@ export const messages: Record<string, { en: string; ru: string }> = {
     en: "Save",
     ru: "Сохранить",
   },
-  "Despre loc": {
-    en: "Overview",
-    ru: "Об этом месте",
-  },
+  "Despre experiență": { en: "About the experience", ru: "О впечатлении" },
+  "Despre locație": { en: "About the location", ru: "О месте" },
   Contacte: {
     en: "Contacts",
     ru: "Контакты",

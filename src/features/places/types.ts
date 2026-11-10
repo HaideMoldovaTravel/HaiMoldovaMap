@@ -1,4 +1,5 @@
 export type CategoryId = string;
+export type BookingMode = "group" | "private";
 export interface Place {
   id: string;
   source?: "haide";
@@ -8,6 +9,9 @@ export interface Place {
   category: Exclude<CategoryId, "all">;
   subcategories?: string[];
   kind?: "location" | "experience";
+  bookingMode?: BookingMode;
+  minPeople?: number;
+  maxPeople?: number;
   region: string;
   village: string;
   coordinates: [number, number];
@@ -52,6 +56,7 @@ export interface PlaceFilters {
   category: CategoryId;
   region: string;
   minRating: number;
+  minPrice?: number;
   maxPrice: number;
   savedOnly: boolean;
 }

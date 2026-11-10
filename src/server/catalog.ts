@@ -844,6 +844,14 @@ export async function publicCatalog(): Promise<Place[]> {
         subcategories: Array.isArray(v.experience_subcategories)
           ? v.experience_subcategories
           : [],
+        bookingMode:
+          v.booking_mode === "Grup privat" || v.booking_mode === "private"
+            ? "private"
+            : v.booking_mode === "Grup deschis" || v.booking_mode === "group"
+              ? "group"
+              : undefined,
+        minPeople: typeof v.min_people === "number" ? v.min_people : undefined,
+        maxPeople: typeof v.max_people === "number" ? v.max_people : undefined,
         kind: listing.kind === "experience" ? "experience" : "location",
         categoryLabel: category.name,
         categoryLabelEn: category.nameEn,
@@ -905,6 +913,7 @@ export async function publicCatalog(): Promise<Place[]> {
                 "tags",
                 "internal_notes",
                 "experience_subcategories",
+                "booking_mode",
               ].includes(f.id) &&
               v[f.id] !== undefined,
           )
